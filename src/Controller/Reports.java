@@ -94,7 +94,7 @@ public class Reports {
         }
         List<WagonInTrain> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
-                + " id_vlaku,"
+                + " id_vlaka,"
                 + " Vlak.nazov as vlak_nazov,"
                 + " id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
