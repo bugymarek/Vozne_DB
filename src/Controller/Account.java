@@ -45,17 +45,18 @@ public class Account {
         try {
             if (rs != null) {
 
-                rs.next();
-                //Retrieve by column name
-                String name = rs.getString("meno");
-                String lastName = rs.getString("priezvisko");
-                String login = rs.getString("login");
-                String hash = rs.getString("hash");
-                String rod_cislo = rs.getString("rod_cislo");
-                int id_funkcie = rs.getInt("id_funkcie");
-                Blob foto =  rs.getBlob("foto");
-                result = true;
-                this.User = new User(rod_cislo, name, lastName, login, hash, id_funkcie, foto);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String name = rs.getString("meno");
+                    String lastName = rs.getString("priezvisko");
+                    String login = rs.getString("login");
+                    String hash = rs.getString("hash");
+                    String rod_cislo = rs.getString("rod_cislo");
+                    int id_funkcie = rs.getInt("id_funkcie");
+                    Blob foto = rs.getBlob("foto");
+                    result = true;
+                    this.User = new User(rod_cislo, name, lastName, login, hash, id_funkcie, foto);
+                }
                 rs.close();
 
             }
@@ -67,7 +68,7 @@ public class Account {
         return result;
     }
 
-    private String hashPassword(String passwordToHash) {
+    public static String hashPassword(String passwordToHash) {
         String generatedPassword = null;
         try {
             // Create MessageDigest instance for MD5
@@ -95,6 +96,6 @@ public class Account {
     }
 
     public User getUser() {
-       return User;
+        return User;
     }
 }
