@@ -21,6 +21,7 @@ import service.DBManager;
  * @author Bugy
  */
 public class Reports {
+
     private DBManager DbManager;
     SimpleDateFormat Formater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
@@ -41,8 +42,8 @@ public class Reports {
         if (!isNullOrEmpty(company)) {
             company = " AND Spolocnost.nazov like" + addApostrofs(company);
         }
-        List<WagonOnStation> result = new ArrayList<>();
-        ResultSet rs = DbManager.querySQL("SELECT"
+
+        String wagonsOutService = "SELECT"
                 + " id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -56,14 +57,34 @@ public class Reports {
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
-                + wagonType + inService + company
-        );
+                + wagonType + inService + company;
+        
+        String wagonsInService = "SELECT"
+                + " Vozen.id_vozna,"
+                + " Spolocnost.nazov as spolocnostNazov,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " v_prevadzke"
+                + " FROM  Typ_vozna"
+                + " join Vozen  using(id_typu)"
+                + " join Vozen_spolocnost on(Vozen_spolocnost.id_vozna = Vozen.id_vozna )"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Sprava_voznov on(Sprava_voznov.id_vozna = Vozen.id_vozna )"
+                + " join Vlak using(id_vlaku)"
+                + " join Snimanie using(id_vlaku)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " join Stanica using (id_stanice)"              
+                + " where id_stanice like " + idStation
+                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + wagonType + inService + company;
+        List<WagonOnStation> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL(wagonsOutService + " UNION " + wagonsInService);
 
         try {
             if (rs != null) {
                 while (rs.next()) {
                     String idWagon = rs.getString("id_vozna");
-                    String spolocnostNazov = rs.getString("spolocnostNazov");   
+                    String spolocnostNazov = rs.getString("spolocnostNazov");
                     String inServiceDb = rs.getString("v_prevadzke");
                     String wagonTypeDb = rs.getString("typ_vozna_nazov");
                     WagonOnStation wagonOnStation = new WagonOnStation(idWagon, inServiceDb, wagonTypeDb, spolocnostNazov);
@@ -118,9 +139,9 @@ public class Reports {
             if (rs != null) {
                 while (rs.next()) {
                     String idWagon = rs.getString("id_vozna");
-                    String idTrainDb = rs.getString("id_vlaku"); 
+                    String idTrainDb = rs.getString("id_vlaku");
                     String trainName = rs.getString("vlak_nazov");
-                    String spolocnostNazov = rs.getString("spolocnostNazov");                  
+                    String spolocnostNazov = rs.getString("spolocnostNazov");
                     String wagonTypeDb = rs.getString("typ_vozna_nazov");
                     String trainTypeDb = rs.getString("typ_vlaku_nazov");
                     Date dateFrom = rs.getDate("datumOd");
