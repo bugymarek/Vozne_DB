@@ -33,7 +33,7 @@ public class DBManager {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            stmt.setMaxRows(300); //strankovanie po 300 rows
+            //stmt.setMaxRows(300); //strankovanie po 300 rows
             //stmt.setFetchDirection(); toutou metodou sa asi bude robit seek
             return stmt.executeQuery(query);
         } catch (
@@ -52,14 +52,14 @@ public class DBManager {
         return null;
     }
 
-    public void insertSql(String query, byte[] prst)
+    public void insertSql(String query, byte[] img)
     {
         try {
             //STEP 4: Execute a query
             pstmt = conn.prepareStatement(query);
-            InputStream fis = new ByteArrayInputStream(prst);
+            InputStream fis = new ByteArrayInputStream(img);
 
-            pstmt.setBinaryStream(1, fis, prst.length);
+            pstmt.setBinaryStream(1, fis, img.length);
             pstmt.executeUpdate();
 
 

@@ -5,9 +5,12 @@
  */
 package Controller;
 
+import Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import service.DBManager;
 
 /**
@@ -118,8 +121,8 @@ public class DataManager {
 
         return result;
     }
-    
-     public ArrayList<String> getCompanyNames() {
+
+    public ArrayList<String> getCompanyNames() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
                 + " nazov"
@@ -141,14 +144,15 @@ public class DataManager {
 
         return result;
     }
-     
-     public ArrayList<String> getTrainIds() {
+
+    public ArrayList<String> getTrainIds() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
                 + " id_vlaku,"
                 + " nazov"
                 + " FROM"
                 + " Vlak"
+                + " ORDER BY id_vlaku asc"
         );
         try {
             if (rs != null) {
@@ -165,7 +169,7 @@ public class DataManager {
 
         return result;
     }
-     
+
     public ArrayList<String> getTrainTypes() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
@@ -189,7 +193,22 @@ public class DataManager {
         return result;
     }
 
-    
+    public void insertOsoba(User user) {
+        String query
+                = "INSERT INTO UZIVATEL VALUES (" + addApostrofs(user.getLogin()) + ","
+                + addApostrofs(user.getHash()) + ","
+                + addApostrofs(user.getRc()) + ","
+                + user.getIdFunction() + ",?" + ")";
+        
+       byte[] foto = null;
+        try {
+            foto = user.getFoto().getBytes(1,(int)user.getFoto().length());
+        } catch (SQLException ex) {
+            Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       DbManager.insertSql(query, foto);
+    }
+
     private String addApostrofs(String name) {
         return "'" + name + "'";
     }
