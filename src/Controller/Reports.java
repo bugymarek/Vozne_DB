@@ -21,7 +21,7 @@ import service.DBManager;
  * @author Bugy
  */
 public class Reports {
-
+  ////mihcalval df
     private DBManager DbManager;
     SimpleDateFormat Formater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
