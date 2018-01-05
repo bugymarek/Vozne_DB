@@ -335,7 +335,7 @@ public class Reports {
                 + " from Snimanie "
                 + " join Snimac using(id_snimacu)"
                 + " left join Stanica using (id_snimacu)"
-                + " where id_vozna like " +idWagon
+                + " where id_vozna like " +addApostrofs(idWagon)
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
                
 
@@ -350,8 +350,8 @@ public class Reports {
                 + " join Snimanie sn on(sn.id_vlaku = v.id_vlaku ) "
                 + " join Snimac s using(id_snimacu)"
                 + " left join Stanica st using (id_snimacu)"
-                + " where sv.id_vozna" +idWagon
-                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
+                + " where sv.id_vozna like " +addApostrofs(idWagon)
+                + " AND TO_DATE (TO_CHAR (sn.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
         List<HistoricalWagonLocation> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL(wagonsOutService + " UNION " + wagonsInService);
 
