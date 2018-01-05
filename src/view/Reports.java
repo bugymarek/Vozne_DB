@@ -7,6 +7,7 @@ package view;
 
 import Controller.DataManager;
 import Model.WagonInTrain;
+import Model.ActualyWagonLocation;
 import Model.WagonOnStation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,6 +81,10 @@ public class Reports extends javax.swing.JDialog {
         jComboBoxCopanyName2 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jComboBoxSelectWagon = new javax.swing.JComboBox<>();
+        jBRefresh = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableLocation = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -391,15 +396,47 @@ public class Reports extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Zoznam vozňov vo vlakoch (3)", jPanel4);
 
+        jComboBoxSelectWagon.setMaximumRowCount(40);
+
+        jBRefresh.setText("Refresh");
+        jBRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRefreshActionPerformed(evt);
+            }
+        });
+
+        jTableLocation.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(jTableLocation);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1208, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxSelectWagon, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jComboBoxSelectWagon, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBRefresh)
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Aktuálna poloha vozňa (4)", jPanel5);
@@ -555,6 +592,9 @@ public class Reports extends javax.swing.JDialog {
         List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
         trainTypes.addAll(DataManager.getTrainTypes());
         jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
+        
+        List<String> idWagons = DataManager.getWagonId();
+        jComboBoxSelectWagon.setModel(new DefaultComboBoxModel(idWagons.toArray()));
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -678,8 +718,34 @@ public class Reports extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jPanel4MouseClicked
 
+    private void jBRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRefreshActionPerformed
+        // TODO add your handling code here:
+        jBRefresh.setText("Refreshing...");
+        jBRefresh.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+
+                String idWagon = String.valueOf(jComboBoxSelectWagon.getSelectedItem());
+                List<ActualyWagonLocation> actWagons = Reports.getWagonLocation(idWagon);
+                Object[][] o = new Object[actWagons.size()][2];
+                for (ActualyWagonLocation wagon : actWagons) {
+                    o[i][0] = wagon.getZemDlzka();
+                    o[i][1] = wagon.getZemSirka();                   
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{" zem dlzka", "zem sirka"});
+                jTableLocation.setModel(d);
+                jBRefresh.setText("Refresh");
+                jBRefresh.setEnabled(true);
+            }
+        });
+        t1.start();
+    }//GEN-LAST:event_jBRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBRefresh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
@@ -687,6 +753,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxCopanyName2;
     private javax.swing.JComboBox<String> jComboBoxIdTrain;
     private javax.swing.JComboBox<String> jComboBoxInService;
+    private javax.swing.JComboBox<String> jComboBoxSelectWagon;
     private javax.swing.JComboBox<String> jComboBoxStationName;
     private javax.swing.JComboBox<String> jComboBoxTrainType;
     private javax.swing.JComboBox<String> jComboBoxWagonType;
@@ -715,6 +782,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSpinner jSpinnerDate;
     private javax.swing.JSpinner jSpinnerDateFrom;
     private javax.swing.JSpinner jSpinnerDateTo;
@@ -722,5 +790,6 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTableLocation;
     // End of variables declaration//GEN-END:variables
 }

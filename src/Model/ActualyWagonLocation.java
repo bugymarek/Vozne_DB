@@ -10,21 +10,26 @@ package Model;
  * @author Michal
  */
 public class ActualyWagonLocation {
-    private double IDWagon;
+    private String IDWagon;
     private double zemDlzka;
      private double zemSirka;
      
-    public ActualyWagonLocation(double IDWagon, double zemDlzka, double zemSirka) {
+    public ActualyWagonLocation(String IDWagon, double zemDlzka, double zemSirka) {
         this.IDWagon = IDWagon;
         this.zemDlzka = zemDlzka;
         this.zemSirka = zemSirka;
     }
 
-    public double getIDWagon() {
+    public ActualyWagonLocation(double zemDlzka, double zemSirka) {
+        this.zemDlzka = zemDlzka;
+        this.zemSirka = zemSirka;
+    }
+
+    public String getIDWagon() {
         return IDWagon;
     }
 
-    public void setIDWagon(double IDWagon) {
+    public void setIDWagon(String IDWagon) {
         this.IDWagon = IDWagon;
     }
      

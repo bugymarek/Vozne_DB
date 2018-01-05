@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.WagonInTrain;
+import Model.ActualyWagonLocation;
 import Model.WagonOnStation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -99,6 +100,50 @@ public class Reports {
         }
 
         return result;
+    }
+    
+    public List<ActualyWagonLocation> getWagonLocation(String IdWagon){
+    
+        String wagonsUnConnect = "SELECT"
+                + " ZEM_DLZKA,ZEM_SIRKA"
+                + " from Snimanie"
+                + " join Snimac using(id_snimacu)"
+                + " where cas_do is null"
+                + " and  id_vozna like " + addApostrofs(IdWagon);
+        String wagonsInTrainWhitchStay = "SELECT"
+                + " ZEM_DLZKA,ZEM_SIRKA"
+                + " from Sprava_voznov  sv"
+                + " join Vlak v on(sv.id_vlaku = v.id_vlaku ) "
+                + " join Snimanie sn on(sn.id_vlaku = v.id_vlaku )"
+                + " join Snimac s using(id_snimacu)"
+                + " where cas_do is null"
+                + " and  sv.id_vozna like " + addApostrofs(IdWagon);  
+        String wagonsInTrainWhitchTransport = "SELECT "
+                + " ZEM_DLZKA,ZEM_SIRKA"
+                + " from Snimac join Snimanie sn1 using(id_snimacu)"
+                + " where cas_do = (select max(cas_do) from Snimanie sn"
+                + " join Vlak using(id_vlaku)"
+                + " join Sprava_Voznov sv using(id_vlaku)"
+                + " where sv.id_vozna like " + addApostrofs(IdWagon)+")"; 
+        List<ActualyWagonLocation> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL(wagonsUnConnect + " UNION " + wagonsInTrainWhitchStay + " UNION " +wagonsInTrainWhitchTransport);    
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    double longitud = rs.getDouble("ZEM_DLZKA");
+                    double latitud = rs.getDouble("ZEM_SIRKA");
+                    ActualyWagonLocation actualWagon = new ActualyWagonLocation(longitud, latitud);
+                    result.add(actualWagon);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+    return result;
     }
 
     public List<WagonInTrain> getWagonsInTrain(int idTrain, String trainType, String wagonType, Date date, String company) {

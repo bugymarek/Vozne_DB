@@ -100,6 +100,28 @@ public class DataManager {
 
         return result;
     }
+     public ArrayList<String> getWagonId() {
+        ArrayList<String> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL("SELECT"
+                + " id_vozna"
+                + " FROM"
+                + " Vozen"
+        );
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    result.add(rs.getString("id_vozna"));
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public ArrayList<String> getFunctionNames() {
         ArrayList<String> result = new ArrayList<>();
