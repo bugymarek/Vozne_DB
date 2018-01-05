@@ -696,10 +696,10 @@ public class Reports extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxStationNameMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-       ///mnbm
+        ///mnbm
         List<String> stations = DataManager.getStationNames();
         jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
-        
+
         List<String> stations2 = new ArrayList<>(Arrays.asList(""));
         stations2.addAll(stations);
         jComboBoxStationName1.setModel(new DefaultComboBoxModel(stations2.toArray()));
@@ -719,14 +719,14 @@ public class Reports extends javax.swing.JDialog {
         jComboBoxCopanyName.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         jComboBoxCopanyName1.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         jComboBoxCopanyName2.setModel(new DefaultComboBoxModel(companyNames.toArray()));
-        
+
         List<String> trainIds = DataManager.getTrainIds();
         jComboBoxIdTrain.setModel(new DefaultComboBoxModel(trainIds.toArray()));
 
         List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
         trainTypes.addAll(DataManager.getTrainTypes());
         jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
-        
+
         List<String> idWagons = DataManager.getWagonId();
         jComboBoxSelectWagon.setModel(new DefaultComboBoxModel(idWagons.toArray()));
     }//GEN-LAST:event_jTabbedPane1MouseClicked
@@ -737,7 +737,7 @@ public class Reports extends javax.swing.JDialog {
         Thread t1 = new Thread(new Runnable() {
             public void run() {
                 int i = 0;
-                
+
                 String stationName = String.valueOf(jComboBoxStationName.getSelectedItem());
                 int stationId = DataManager.getStationId(stationName);
                 String wagonType = String.valueOf(jComboBoxWagonType.getSelectedItem());
@@ -745,7 +745,7 @@ public class Reports extends javax.swing.JDialog {
                 String company = String.valueOf(jComboBoxCopanyName.getSelectedItem());
                 SpinnerDateModel modelFrom = (SpinnerDateModel) jSpinnerDateFrom.getModel();
                 SpinnerDateModel modelTo = (SpinnerDateModel) jSpinnerDateTo.getModel();
-                
+
                 List<WagonOnStation> wagons = Reports.getWagonsOnStation(stationId, wagonType, inService, modelFrom.getDate(), modelTo.getDate(), company);
                 Object[][] o = new Object[wagons.size()][4];
                 for (WagonOnStation wagon : wagons) {
@@ -763,6 +763,71 @@ public class Reports extends javax.swing.JDialog {
         });
         t1.start();
     }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        jButton3.setText("Refreshing...");
+        jButton3.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+
+                String comboStation = String.valueOf(jComboBoxStationName1.getSelectedItem());
+                if (!Reports.isNullOrEmpty(comboStation)) {
+                    int idStation = DataManager.getStationId(String.valueOf(jComboBoxStationName1.getSelectedItem()));
+                    comboStation = Integer.toString(idStation);
+                }
+
+                String wagonType = String.valueOf(jComboBoxWagonType1.getSelectedItem());
+                String company = String.valueOf(jComboBoxCopanyName1.getSelectedItem());
+                String inService = String.valueOf(jComboBoxInService1.getSelectedItem());
+                SpinnerDateModel modelDate = (SpinnerDateModel) jSpinnerDate1.getModel();
+
+                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, modelDate.getDate(), company);
+                Object[][] o = new Object[wagons.size()][9];
+                for (ActualyWagonLocation wagon : wagons) {
+                    o[i][0] = wagon.getStationName();
+                    o[i][1] = wagon.getWagonType();
+                    o[i][2] = wagon.getInService();
+                    o[i][3] = wagon.getCompany();
+                    o[i][4] = wagon.getIDWagon();
+                    o[i][5] = wagon.getLatitude();
+                    o[i][6] = wagon.getLongitude();
+                    o[i][7] = Formater.format(wagon.getDateFrom());
+                    o[i][8] = wagon.getDateTo() == null ? null : Formater.format(wagon.getDateTo());
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Stanica", "Typ vozňa", "V prevádzke", "Spoločnosť", "Id vozňa", "Zem šírka", "Zem dĺžka", "Dátum snímania od", "Dátum snímania do"});
+                jTable3.setModel(d);
+                jButton3.setText("Refresh");
+                jButton3.setEnabled(true);
+            }
+        });
+        t1.start();
+    }
+
+    private void jComboBoxWagonType1MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBoxWagonType1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBoxCopanyName1MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBoxCopanyName1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBoxStationName1MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBoxStationName1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
     private void jComboBoxWagonTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxWagonTypeMouseClicked
         // TODO add your handling code here:
@@ -804,7 +869,7 @@ public class Reports extends javax.swing.JDialog {
                     o[i][4] = wagon.getWagonType();
                     o[i][5] = wagon.getCompany();
                     o[i][6] = Formater.format(wagon.getDateFrom());
-                    o[i][7] =  wagon.getDateTo() == null ? null : Formater.format(wagon.getDateTo());
+                    o[i][7] = wagon.getDateTo() == null ? null : Formater.format(wagon.getDateTo());
                     i++;
                 }
                 DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Id vlaku", " Názov vlaku", "Typ Vlaku", "Id vozňa", "Typ vozňa", "Spoločnosť", "Dátum od", "Dátum do"});
@@ -865,7 +930,7 @@ public class Reports extends javax.swing.JDialog {
                 Object[][] o = new Object[actWagons.size()][2];
                 for (ActualyWagonLocation wagon : actWagons) {
                     o[i][0] = wagon.getLongitude();
-                    o[i][1] = wagon.getLatitude();                   
+                    o[i][1] = wagon.getLatitude();
                     i++;
                 }
                 DefaultTableModel d = new DefaultTableModel(o, new Object[]{" zem dlzka", "zem sirka"});
