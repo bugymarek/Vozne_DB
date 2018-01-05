@@ -8,6 +8,7 @@ package Controller;
 import Model.ActualyWagonLocation;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
+import Model.HistoricalWagonLocation;
 import Model.WagonOnStation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -322,6 +323,57 @@ public class Reports {
         }
 
         return result;
+    }
+    
+    public List<HistoricalWagonLocation> getHistoricalLocationData(String idWagon,Date dateFrom, Date datesTo) {
+        String datFrom = Formater.format(dateFrom);
+        String datTO = Formater.format(datesTo);
+        String wagonsOutService = "SELECT"
+                + " nazov,ZEM_DLZKA,ZEM_SIRKA,cas_od,cas_do"
+                + " from Snimanie "
+                + " join Snimac using(id_snimacu)"
+                + " left join Stanica using (id_snimacu)"
+                + " where id_vozna like " +idWagon
+                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
+               
+
+        String wagonsInService = "SELECT"
+                + " st.nazov as nazov,"
+                + " s.ZEM_DLZKA as ZEM_DLZKA,"
+                + " s.ZEM_SIRKA as ZEM_SIRKA,"
+                + " sn.cas_od as cas_od,"
+                + " sn.cas_do as cas_do"
+                + " from Sprava_voznov sv"
+                + " join Vlak v on(sv.id_vlaku = v.id_vlaku )"
+                + " join Snimanie sn on(sn.id_vlaku = v.id_vlaku ) "
+                + " join Snimac s using(id_snimacu)"
+                + " left join Stanica st using (id_snimacu)"
+                + " where sv.id_vozna" +idWagon
+                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
+        List<HistoricalWagonLocation> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL(wagonsOutService + " UNION " + wagonsInService);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    String nazov = rs.getString("nazov");
+                    double longitud = rs.getDouble("ZEM_DLZKA");
+                    double latitud = rs.getDouble("ZEM_SIRKA");
+                    Date timeFrom = rs.getDate("cas_od");
+                    Date timeTo = rs.getDate("cas_do");
+                    HistoricalWagonLocation historyLocation = new HistoricalWagonLocation(nazov, longitud, latitud, timeFrom,timeTo);
+                    result.add(historyLocation);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return null;
     }
 
     public boolean isNullOrEmpty(String term) {
