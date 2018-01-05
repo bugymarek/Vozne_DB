@@ -10,6 +10,7 @@ import Model.ActualyWagonLocation;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.WagonOnStation;
+import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ public class Reports extends javax.swing.JDialog {
         this.Reports = new Controller.Reports(dbManager);
         initComponents();
         setVisible(true);
+        
     }
 
     /**
@@ -111,6 +113,11 @@ public class Reports extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
@@ -696,39 +703,7 @@ public class Reports extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxStationNameMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        ///mnbm
-        List<String> stations = DataManager.getStationNames();
-        jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
-
-        List<String> stations2 = new ArrayList<>(Arrays.asList(""));
-        stations2.addAll(stations);
-        jComboBoxStationName1.setModel(new DefaultComboBoxModel(stations2.toArray()));
-
-        List<String> wagonTypes = new ArrayList<>(Arrays.asList(""));
-        wagonTypes.addAll(DataManager.getWagonTypes());
-        jComboBoxWagonType.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
-        jComboBoxWagonType1.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
-        jComboBoxWagonType2.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
-
-        List<String> inServiceLs = new ArrayList<>(Arrays.asList("", "N", "Y"));
-        jComboBoxInService.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
-        jComboBoxInService1.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
-
-        List<String> companyNames = new ArrayList<>(Arrays.asList(""));
-        companyNames.addAll(DataManager.getCompanyNames());
-        jComboBoxCopanyName.setModel(new DefaultComboBoxModel(companyNames.toArray()));
-        jComboBoxCopanyName1.setModel(new DefaultComboBoxModel(companyNames.toArray()));
-        jComboBoxCopanyName2.setModel(new DefaultComboBoxModel(companyNames.toArray()));
-
-        List<String> trainIds = DataManager.getTrainIds();
-        jComboBoxIdTrain.setModel(new DefaultComboBoxModel(trainIds.toArray()));
-
-        List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
-        trainTypes.addAll(DataManager.getTrainTypes());
-        jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
-
-        List<String> idWagons = DataManager.getWagonId();
-        jComboBoxSelectWagon.setModel(new DefaultComboBoxModel(idWagons.toArray()));
+        
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -763,7 +738,7 @@ public class Reports extends javax.swing.JDialog {
         });
         t1.start();
     }//GEN-LAST:event_jButton2ActionPerformed
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         jButton3.setText("Refreshing...");
         jButton3.setEnabled(false);
@@ -942,6 +917,46 @@ public class Reports extends javax.swing.JDialog {
         t1.start();
     }//GEN-LAST:event_jBRefreshActionPerformed
 
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+         Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                List<String> stations = DataManager.getStationNames();
+        jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
+
+        List<String> stations2 = new ArrayList<>(Arrays.asList(""));
+        stations2.addAll(stations);
+        jComboBoxStationName1.setModel(new DefaultComboBoxModel(stations2.toArray()));
+
+        List<String> wagonTypes = new ArrayList<>(Arrays.asList(""));
+        wagonTypes.addAll(DataManager.getWagonTypes());
+        jComboBoxWagonType.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+        jComboBoxWagonType1.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+        jComboBoxWagonType2.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+
+        List<String> inServiceLs = new ArrayList<>(Arrays.asList("", "N", "Y"));
+        jComboBoxInService.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
+        jComboBoxInService1.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
+
+        List<String> companyNames = new ArrayList<>(Arrays.asList(""));
+        companyNames.addAll(DataManager.getCompanyNames());
+        jComboBoxCopanyName.setModel(new DefaultComboBoxModel(companyNames.toArray()));
+        jComboBoxCopanyName1.setModel(new DefaultComboBoxModel(companyNames.toArray()));
+        jComboBoxCopanyName2.setModel(new DefaultComboBoxModel(companyNames.toArray()));
+
+        List<String> trainIds = DataManager.getTrainIds();
+        jComboBoxIdTrain.setModel(new DefaultComboBoxModel(trainIds.toArray()));
+
+        List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
+        trainTypes.addAll(DataManager.getTrainTypes());
+        jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
+
+        List<String> idWagons = DataManager.getWagonId();
+        jComboBoxSelectWagon.setModel(new DefaultComboBoxModel(idWagons.toArray()));
+            }
+        });
+        t1.start();      
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBRefresh;
@@ -954,8 +969,8 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxCopanyName2;
     private javax.swing.JComboBox<String> jComboBoxIdTrain;
     private javax.swing.JComboBox<String> jComboBoxInService;
-    private javax.swing.JComboBox<String> jComboBoxSelectWagon;
     private javax.swing.JComboBox<String> jComboBoxInService1;
+    private javax.swing.JComboBox<String> jComboBoxSelectWagon;
     private javax.swing.JComboBox<String> jComboBoxStationName;
     private javax.swing.JComboBox<String> jComboBoxStationName1;
     private javax.swing.JComboBox<String> jComboBoxTrainType;
