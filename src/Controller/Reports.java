@@ -125,7 +125,8 @@ public class Reports {
                 + " where cas_do = (select max(cas_do) from Snimanie sn"
                 + " join Vlak using(id_vlaku)"
                 + " join Sprava_Voznov sv using(id_vlaku)"
-                + " where sv.id_vozna like " + addApostrofs(IdWagon) + ")";
+                + " where sn.cas_do is null"
+                + " and sv.id_vozna like " + addApostrofs(IdWagon) + ")";
         List<ActualyWagonLocation> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL(wagonsUnConnect + " UNION " + wagonsInTrainWhitchStay + " UNION " + wagonsInTrainWhitchTransport);
         try {
