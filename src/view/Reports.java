@@ -696,6 +696,7 @@ public class Reports extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxStationNameMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+       ///mnbm
         List<String> stations = DataManager.getStationNames();
         jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
         
