@@ -45,6 +45,7 @@ public class App extends javax.swing.JFrame {
     private User User;
     private DataManager DataManager;
     private Blob PhotoBlob;
+    private Controller.App AppController;
 
     /**
      * Creates new form App
@@ -57,6 +58,7 @@ public class App extends javax.swing.JFrame {
         this.User = user;
         this.DbManager = dbManager;
         this.DataManager = new DataManager(DbManager);
+        this.AppController = new Controller.App();
         setVisible(true);
         setUserPropreties();
         if (!showNewUserTab()) {
