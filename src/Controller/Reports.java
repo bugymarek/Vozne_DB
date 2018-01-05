@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.ActualyWagonLocation;
 import Model.WagonInTrain;
 import Model.WagonOnStation;
 import java.sql.ResultSet;
@@ -34,13 +35,13 @@ public class Reports {
         String datTO = Formater.format(datesTo);
 
         if (!isNullOrEmpty(wagonType)) {
-            wagonType = " AND Typ_vozna.nazov like" + addApostrofs(wagonType);
+            wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
         }
         if (!isNullOrEmpty(inService)) {
-            inService = " AND v_prevadzke like" + addApostrofs(inService);
+            inService = " AND v_prevadzke like " + addApostrofs(inService);
         }
         if (!isNullOrEmpty(company)) {
-            company = " AND Spolocnost.nazov like" + addApostrofs(company);
+            company = " AND Spolocnost.nazov like " + addApostrofs(company);
         }
 
         String wagonsOutService = "SELECT"
@@ -58,7 +59,7 @@ public class Reports {
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
-        
+
         String wagonsInService = "SELECT"
                 + " Vozen.id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
@@ -73,7 +74,7 @@ public class Reports {
                 + " join Snimanie using(id_vlaku)"
                 + " join Snimac using(id_snimacu)"
                 + " join Kolajovy_usek using(id_snimacu)"
-                + " join Stanica using (id_stanice)"              
+                + " join Stanica using (id_stanice)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
@@ -101,16 +102,108 @@ public class Reports {
         return result;
     }
 
+    public List<ActualyWagonLocation> getCurrentWagonsLocation(String idStation, String wagonType, String inService, Date date, String company) {
+        String dateString = addApostrofs(Formater.format(date));
+
+        if (!isNullOrEmpty(wagonType)) {
+            wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
+        }
+        if (!isNullOrEmpty(inService)) {
+            inService = " AND v_prevadzke like " + addApostrofs(inService);
+        }
+        if (!isNullOrEmpty(company)) {
+            company = " AND Spolocnost.nazov like " + addApostrofs(company);
+        }
+        if (!isNullOrEmpty(idStation)) {
+            idStation = " AND id_stanice like " + Integer.parseInt(idStation);
+        }
+
+        String wagonsOutService = "select"
+                + " id_vozna as vozenVlaku,"
+                + " ZEM_DLZKA,"
+                + " ZEM_SIRKA,"
+                + " cas_od,"
+                + " cas_do,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnos_nazov,"
+                + " Stanica.nazov as stanica_nazov,"
+                + " v_prevadzke"
+                + " from Typ_vozna"
+                + " join Vozen  using(id_typu)"
+                + " join Vozen_spolocnost using(id_vozna)"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Snimanie using(id_vozna)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " join Stanica using(id_stanice)"
+                + " where cas_do is null"
+                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + wagonType + inService + company + idStation;
+
+        String wagonsInService = "select"
+                + " Vozen.id_vozna as vozenVlaku,"
+                + " ZEM_DLZKA,"
+                + " ZEM_SIRKA,"
+                + " cas_od,"
+                + " cas_do,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnos_nazov,"
+                + " Stanica.nazov as stanica_nazov,"
+                + " v_prevadzke"
+                + " from Spolocnost"
+                + " join Vozen_spolocnost using(id_spolocnosti)"
+                + " join Vozen on(Vozen_spolocnost.id_vozna = Vozen.id_vozna )"
+                + " join TYP_VOZNA using(id_typu)"
+                + " join Sprava_voznov on(Sprava_voznov.id_vozna = Vozen.id_vozna )"
+                + " join Vlak using(id_vlaku)"
+                + " join Snimanie using(id_vlaku)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " join Stanica using(id_stanice)"
+                + " where cas_do is null"
+                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + wagonType + inService + company + idStation;
+        List<ActualyWagonLocation> result = new ArrayList<>();
+        DBManager db = new DBManager();
+        ResultSet rs = db.querySQL(wagonsOutService + " UNION " + wagonsInService);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    String idWagon = rs.getString("vozenVlaku");
+                    String stationName = rs.getString("stanica_nazov");
+                    Double latitude = rs.getDouble("ZEM_SIRKA");
+                    Double longitude = rs.getDouble("ZEM_DLZKA");
+                    Date dateFrom = rs.getDate("cas_od");
+                    Date dateTo = rs.getDate("cas_do");
+                    String companyName = rs.getString("spolocnos_nazov");
+                    String inServiceDb = rs.getString("v_prevadzke");
+                    String wagonTypeDb = rs.getString("typ_vozna_nazov");
+
+                    ActualyWagonLocation actualyWagonLocation = new ActualyWagonLocation(idWagon, latitude, longitude, dateFrom, dateTo, wagonTypeDb, stationName, inServiceDb, companyName);
+                    result.add(actualyWagonLocation);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public List<WagonInTrain> getWagonsInTrain(int idTrain, String trainType, String wagonType, Date date, String company) {
         String dateString = addApostrofs(Formater.format(date));
         if (!isNullOrEmpty(wagonType)) {
-            wagonType = " AND Typ_vozna.nazov like" + addApostrofs(wagonType);
+            wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
         }
         if (!isNullOrEmpty(trainType)) {
-            trainType = " AND Typ_vlaku.nazov like" + addApostrofs(trainType);
+            trainType = " AND Typ_vlaku.nazov like " + addApostrofs(trainType);
         }
         if (!isNullOrEmpty(company)) {
-            company = " AND Spolocnost.nazov like" + addApostrofs(company);
+            company = " AND Spolocnost.nazov like " + addApostrofs(company);
         }
         List<WagonInTrain> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
@@ -161,7 +254,7 @@ public class Reports {
     }
 
     public boolean isNullOrEmpty(String term) {
-        return term == null || term.equals("");
+        return term == null || term.equals("") || term.equals("null");
     }
 
     private String addApostrofs(String name) {

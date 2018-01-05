@@ -6,6 +6,7 @@
 package view;
 
 import Controller.DataManager;
+import Model.ActualyWagonLocation;
 import Model.WagonInTrain;
 import Model.WagonOnStation;
 import java.text.SimpleDateFormat;
@@ -52,6 +53,16 @@ public class Reports extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jComboBoxWagonType1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBoxInService1 = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBoxCopanyName1 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBoxStationName1 = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jSpinnerDate1 = new javax.swing.JSpinner();
+        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -118,6 +129,51 @@ public class Reports extends javax.swing.JDialog {
         ));
         jScrollPane3.setViewportView(jTable3);
 
+        jComboBoxWagonType1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxWagonType1MouseClicked(evt);
+            }
+        });
+        jComboBoxWagonType1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxWagonType1ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Typ vozňa");
+
+        jLabel11.setText("V prevadzke");
+
+        jComboBoxCopanyName1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxCopanyName1MouseClicked(evt);
+            }
+        });
+        jComboBoxCopanyName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCopanyName1ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Spoločnosť");
+
+        jComboBoxStationName1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxStationName1MouseClicked(evt);
+            }
+        });
+        jComboBoxStationName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxStationName1ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("Stanica");
+
+        jSpinnerDate1.setModel(new javax.swing.SpinnerDateModel());
+
+        jLabel16.setText("Dátum zosnímania");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -125,14 +181,54 @@ public class Reports extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(0, 267, Short.MAX_VALUE))
+                            .addComponent(jComboBoxStationName1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(204, 204, 204)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxStationName1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -565,18 +661,25 @@ public class Reports extends javax.swing.JDialog {
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         List<String> stations = DataManager.getStationNames();
         jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
+        
+        List<String> stations2 = new ArrayList<>(Arrays.asList(""));
+        stations2.addAll(stations);
+        jComboBoxStationName1.setModel(new DefaultComboBoxModel(stations2.toArray()));
 
         List<String> wagonTypes = new ArrayList<>(Arrays.asList(""));
         wagonTypes.addAll(DataManager.getWagonTypes());
         jComboBoxWagonType.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+        jComboBoxWagonType1.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
         jComboBoxWagonType2.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
 
         List<String> inServiceLs = new ArrayList<>(Arrays.asList("", "N", "Y"));
         jComboBoxInService.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
+        jComboBoxInService1.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
 
         List<String> companyNames = new ArrayList<>(Arrays.asList(""));
         companyNames.addAll(DataManager.getCompanyNames());
         jComboBoxCopanyName.setModel(new DefaultComboBoxModel(companyNames.toArray()));
+        jComboBoxCopanyName1.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         jComboBoxCopanyName2.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         
         List<String> trainIds = DataManager.getTrainIds();
@@ -585,6 +688,7 @@ public class Reports extends javax.swing.JDialog {
         List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
         trainTypes.addAll(DataManager.getTrainTypes());
         jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
+                
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -709,8 +813,69 @@ public class Reports extends javax.swing.JDialog {
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        jButton3.setText("Refreshing...");
+        jButton3.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+                
+                String comboStation = String.valueOf(jComboBoxStationName1.getSelectedItem());
+                if(!Reports.isNullOrEmpty(comboStation)){
+                    int idStation =   DataManager.getStationId(String.valueOf(jComboBoxStationName1.getSelectedItem()));
+                    comboStation = Integer.toString(idStation);
+                }
+                              
+                String wagonType = String.valueOf(jComboBoxWagonType1.getSelectedItem());
+                String company = String.valueOf(jComboBoxCopanyName1.getSelectedItem());
+                String inService = String.valueOf(jComboBoxInService1.getSelectedItem());
+                SpinnerDateModel modelDate = (SpinnerDateModel) jSpinnerDate1.getModel();
+
+                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, modelDate.getDate(), company);
+                Object[][] o = new Object[wagons.size()][9];
+                for (ActualyWagonLocation wagon : wagons) {
+                    o[i][0] = wagon.getStationName();
+                    o[i][1] = wagon.getWagonType();
+                    o[i][2] = wagon.getInService();
+                    o[i][3] = wagon.getCompany();
+                    o[i][4] = wagon.getIDWagon();
+                    o[i][5] = wagon.getLatitude();
+                    o[i][6] = wagon.getLongitude();
+                    o[i][7] = Formater.format(wagon.getDateFrom());
+                    o[i][8] =  wagon.getDateTo() == null ? null : Formater.format(wagon.getDateTo());
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Stanica", "Typ vozňa", "V prevádzke", "Spoločnosť", "Id vozňa", "Zem šírka", "Zem dĺžka", "Dátum snímania od", "Dátum snímania do"});
+                jTable3.setModel(d);
+                jButton3.setText("Refresh");
+                jButton3.setEnabled(true);
+            }
+        });
+        t1.start();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBoxWagonType1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxWagonType1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxWagonType1MouseClicked
+
+    private void jComboBoxWagonType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWagonType1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxWagonType1ActionPerformed
+
+    private void jComboBoxCopanyName1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxCopanyName1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCopanyName1MouseClicked
+
+    private void jComboBoxCopanyName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCopanyName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCopanyName1ActionPerformed
+
+    private void jComboBoxStationName1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxStationName1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationName1MouseClicked
+
+    private void jComboBoxStationName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxStationName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationName1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -719,17 +884,25 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBoxCopanyName;
+    private javax.swing.JComboBox<String> jComboBoxCopanyName1;
     private javax.swing.JComboBox<String> jComboBoxCopanyName2;
     private javax.swing.JComboBox<String> jComboBoxIdTrain;
     private javax.swing.JComboBox<String> jComboBoxInService;
+    private javax.swing.JComboBox<String> jComboBoxInService1;
     private javax.swing.JComboBox<String> jComboBoxStationName;
+    private javax.swing.JComboBox<String> jComboBoxStationName1;
     private javax.swing.JComboBox<String> jComboBoxTrainType;
     private javax.swing.JComboBox<String> jComboBoxWagonType;
+    private javax.swing.JComboBox<String> jComboBoxWagonType1;
     private javax.swing.JComboBox<String> jComboBoxWagonType2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -737,6 +910,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -752,6 +926,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinnerDate;
+    private javax.swing.JSpinner jSpinnerDate1;
     private javax.swing.JSpinner jSpinnerDateFrom;
     private javax.swing.JSpinner jSpinnerDateTo;
     private javax.swing.JTabbedPane jTabbedPane1;
