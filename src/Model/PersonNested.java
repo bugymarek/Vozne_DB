@@ -11,14 +11,14 @@ import java.sql.Blob;
  *
  * @author Bugy
  */
-public class UserNested extends Person{
+public class PersonNested extends Person{
 
     private String Streat;
     private String City;
     private String Country;
     private String CountryShortCut;
 
-    public UserNested(String rc, String name, String lastNamem, String streat, String city, String country, String countryShortCut) {
+    public PersonNested(String rc, String name, String lastNamem, String streat, String city, String country, String countryShortCut) {
         super(rc, name, lastNamem);
         Streat = streat;
         City = city;
