@@ -164,8 +164,8 @@ public class Reports {
             idStation = " AND id_stanice like " + Integer.parseInt(idStation);
         }
 
-        String wagonsOutService = "select"
-                + " id_vozna as vozenVlaku,"
+        String wagonsOutService = "select distinct "
+                + "id_vozna as vozenVlaku,"
                 + " ZEM_DLZKA,"
                 + " ZEM_SIRKA,"
                 + " cas_od,"
@@ -174,8 +174,7 @@ public class Reports {
                 + " Spolocnost.nazov as spolocnos_nazov,"
                 + " Stanica.nazov as stanica_nazov,"
                 + " v_prevadzke"
-                + " from Typ_vozna"
-                + " join Vozen  using(id_typu)"
+                + " from Typ_vozna join Vozen  using(id_typu)"
                 + " join Vozen_spolocnost using(id_vozna)"
                 + " join Spolocnost using(id_spolocnosti)"
                 + " join Snimanie using(id_vozna)"
@@ -183,10 +182,11 @@ public class Reports {
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " join Stanica using(id_stanice)"
                 + " where cas_do is null"
-                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
+                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date('05.01.1990 16:29:39','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company + idStation;
 
-        String wagonsInService = "select"
+        String wagonsInService = "select distinct"
                 + " Vozen.id_vozna as vozenVlaku,"
                 + " ZEM_DLZKA,"
                 + " ZEM_SIRKA,"
@@ -207,10 +207,12 @@ public class Reports {
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " join Stanica using(id_stanice)"
                 + " where cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
                 + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " and cas_do is not null"
                 + wagonType + inService + company + idStation;
 
-        String wagonsLastScaned = "select"
+        String wagonsLastScaned = "select distinct"
                 + " Vozen.id_vozna as vozenVlaku,"
                 + "                ZEM_DLZKA,"
                 + "                ZEM_SIRKA,"

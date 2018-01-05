@@ -7,7 +7,7 @@ package Controller;
 
 import Model.Record;
 import Model.User;
-import Model.UserNested;
+import Model.PersonNested;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -328,7 +328,7 @@ public class DataManager {
         DbManager.insertSql(query);
     }
 
-    public void insertPersonToNestedTable(UserNested user) {
+    public void insertPersonToNestedTable(PersonNested user) {
         String query
                 = "INSERT INTO osoba_nested (rod_cislo, meno, priezvisko, adresa) values ("
                 + addApostrofs(user.getRc()) + ","
