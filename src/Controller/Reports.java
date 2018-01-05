@@ -102,9 +102,9 @@ public class Reports {
 
         return result;
     }
-    
-    public List<ActualyWagonLocation> getWagonLocation(String IdWagon){
-    
+
+    public List<ActualyWagonLocation> getWagonLocation(String IdWagon) {
+
         String wagonsUnConnect = "SELECT"
                 + " ZEM_DLZKA,ZEM_SIRKA"
                 + " from Snimanie"
@@ -118,16 +118,16 @@ public class Reports {
                 + " join Snimanie sn on(sn.id_vlaku = v.id_vlaku )"
                 + " join Snimac s using(id_snimacu)"
                 + " where cas_do is null"
-                + " and  sv.id_vozna like " + addApostrofs(IdWagon);  
+                + " and  sv.id_vozna like " + addApostrofs(IdWagon);
         String wagonsInTrainWhitchTransport = "SELECT "
                 + " ZEM_DLZKA,ZEM_SIRKA"
                 + " from Snimac join Snimanie sn1 using(id_snimacu)"
                 + " where cas_do = (select max(cas_do) from Snimanie sn"
                 + " join Vlak using(id_vlaku)"
                 + " join Sprava_Voznov sv using(id_vlaku)"
-                + " where sv.id_vozna like " + addApostrofs(IdWagon)+")"; 
+                + " where sv.id_vozna like " + addApostrofs(IdWagon) + ")";
         List<ActualyWagonLocation> result = new ArrayList<>();
-        ResultSet rs = DbManager.querySQL(wagonsUnConnect + " UNION " + wagonsInTrainWhitchStay + " UNION " +wagonsInTrainWhitchTransport);    
+        ResultSet rs = DbManager.querySQL(wagonsUnConnect + " UNION " + wagonsInTrainWhitchStay + " UNION " + wagonsInTrainWhitchTransport);
         try {
             if (rs != null) {
                 while (rs.next()) {
@@ -143,8 +143,8 @@ public class Reports {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
-    return result;
+
+        return result;
     }
 
     public List<ActualyWagonLocation> getCurrentWagonsLocation(String idStation, String wagonType, String inService, Date date, String company) {
@@ -208,9 +208,35 @@ public class Reports {
                 + " where cas_do is null"
                 + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company + idStation;
+
+        String wagonsLastScaned = "select"
+                + " Vozen.id_vozna as vozenVlaku,"
+                + "                ZEM_DLZKA,"
+                + "                ZEM_SIRKA,"
+                + "                sn.cas_od,"
+                + "                sn.cas_do,"
+                + "                Typ_vozna.nazov as typ_vozna_nazov,"
+                + "                Spolocnost.nazov as spolocnos_nazov,"
+                + "                Stanica.nazov as stanica_nazov,"
+                + "                v_prevadzke"
+                + " from Stanica "
+                + " join Kolajovy_Usek using(id_stanice)"
+                + " join Snimac on( Kolajovy_usek.id_snimacu = Snimac.id_snimacu) "
+                + " join Snimanie sn using(id_snimacu)"
+                + " join Vlak v on(sn.id_vlaku = v.id_vlaku)"
+                + " join Sprava_voznov sv on(sv.id_vlaku = v.id_vlaku )"
+                + " join Vozen on(sv.id_vozna = Vozen.id_vozna )"
+                + " join Typ_vozna using(id_typu)"
+                + " join Vozen_spolocnost vsp on(vsp.id_vozna= Vozen.id_vozna)"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " where TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " and sn.cas_do = (select max(snim.cas_do) from Snimanie snim"
+                + "                 join Vlak using(id_vlaku)"
+                + "                 join Sprava_Voznov using(id_vlaku)"
+                + "                 where TO_DATE (TO_CHAR (snim.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS'))";
         List<ActualyWagonLocation> result = new ArrayList<>();
         DBManager db = new DBManager();
-        ResultSet rs = db.querySQL(wagonsOutService + " UNION " + wagonsInService);
+        ResultSet rs = db.querySQL(wagonsOutService + " UNION " + wagonsInService + " UNION " + wagonsLastScaned);
 
         try {
             if (rs != null) {
@@ -238,7 +264,6 @@ public class Reports {
 
         return result;
     }
-
 
     public List<WagonInTrain> getWagonsInTrain(int idTrain, String trainType, String wagonType, Date date, String company) {
         String dateString = addApostrofs(Formater.format(date));
