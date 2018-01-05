@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Record;
 import Model.User;
+import Model.UserNested;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class DataManager {
 
     private DBManager DbManager;
     SimpleDateFormat Formater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-    
+
     public DataManager(DBManager dbManager) {
         DbManager = dbManager;
     }
@@ -100,7 +101,8 @@ public class DataManager {
 
         return result;
     }
-     public ArrayList<String> getWagonId() {
+
+    public ArrayList<String> getWagonId() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
                 + " id_vozna"
@@ -171,7 +173,7 @@ public class DataManager {
 
         return result;
     }
-    
+
     public String getStationName(int id) {
         String result = null;
         String query = "SELECT"
@@ -326,12 +328,27 @@ public class DataManager {
         DbManager.insertSql(query);
     }
 
+    public void insertPersonToNestedTable(UserNested user) {
+        String query
+                = "INSERT INTO osoba_nested (rod_cislo, meno, priezvisko, adresa) values ("
+                + addApostrofs(user.getRc()) + ","
+                        + addApostrofs(user.getName()) + ","
+                        + addApostrofs(user.getLastName()) + ","
+                        + " adresa_tab(t_adresa("
+                        + addApostrofs(user.getStreat()) + ","
+                        + addApostrofs(user.getCity()) + ","
+                        + addApostrofs(user.getCountry()) + ","
+                        + addApostrofs(user.getCountryShortCut()) + ")))";
+
+        DbManager.insertSql(query);
+    }
+
     public void insertRecord(Record record) {
         String query
                 = "INSERT INTO Zaznamy VALUES (" + null + ","
                 + "TO_DATE(" + addApostrofs(Formater.format(record.getDate())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
-                        + addApostrofs(record.getDescription()) + ","
-                        + addApostrofs(record.getLogIn()) + ")";
+                + addApostrofs(record.getDescription()) + ","
+                + addApostrofs(record.getLogIn()) + ")";
 
         DbManager.insertSql(query);
     }
