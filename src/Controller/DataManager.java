@@ -171,6 +171,32 @@ public class DataManager {
 
         return result;
     }
+    
+    public String getStationName(int id) {
+        String result = null;
+        String query = "SELECT"
+                + " nazov"
+                + " FROM"
+                + " Stanica"
+                + " WHERE id_stanice like " + id;
+
+        ResultSet rs = DbManager.querySQL(query);
+        try {
+            if (rs != null) {
+
+                rs.next();
+                //Retrieve by column name
+                result = rs.getString("nazov");
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public ArrayList<String> getWagonTypes() {
         ArrayList<String> result = new ArrayList<>();
