@@ -7,6 +7,7 @@ package view;
 
 import Controller.DataManager;
 import Model.ActualyWagonLocation;
+import Model.StatisticsAboutWagonInTrain;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
@@ -801,6 +802,11 @@ public class Reports extends javax.swing.JDialog {
         jScrollPane8.setViewportView(jTable7);
 
         jButton7.setText("Vyhladaj");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -1271,6 +1277,36 @@ public class Reports extends javax.swing.JDialog {
     private void jCBNameAndIdTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBNameAndIdTrainActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCBNameAndIdTrainActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+                // TODO add your handling code here:
+        jButton7.setText("Refreshing...");
+        jButton7.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+                
+                String idAndNameTrain = String.valueOf(jCBNameAndIdTrain.getSelectedItem());
+                String idTrain = idAndNameTrain.split("-")[0];
+                SpinnerDateModel modelFrom = (SpinnerDateModel) jSpinDatumODStatTrain.getModel();
+                SpinnerDateModel modelTo = (SpinnerDateModel) jSpinDatumDoTrainInfo.getModel();
+
+                List<StatisticsAboutWagonInTrain> statTrain = Reports.getStatisticsAboutWagonInTrain(Integer.parseInt(idTrain), modelFrom.getDate(), modelTo.getDate());
+                Object[][] o = new Object[statTrain.size()][3];
+                for (StatisticsAboutWagonInTrain wagon : statTrain) {
+                    o[i][0] = wagon.getNazov() ;
+                    o[i][1] = wagon.getPocet();
+                    o[i][2] = wagon.getPercento();
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Typ vozna", "Pocet ", "Percentualne vyjadrednie"});
+                jTable7.setModel(d);
+                jButton7.setText("Refresh");
+                jButton7.setEnabled(true);
+            }
+        });
+        t1.start();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
