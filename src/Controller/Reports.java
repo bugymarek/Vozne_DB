@@ -375,7 +375,7 @@ public class Reports {
         }
         
         
-        return null;
+        return result;
     }
 
     public boolean isNullOrEmpty(String term) {
