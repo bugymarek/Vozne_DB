@@ -328,7 +328,7 @@ public class Reports {
         return result;
     }
     
-    private List<GroupOfWagon> getGroupOfWagon(String wagonType, Date date, String company){
+    public List<GroupOfWagon> getGroupOfWagon(String wagonType, Date date, String company){
       String dateString = addApostrofs(Formater.format(date));
         if (!isNullOrEmpty(wagonType)) {
             wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
@@ -338,27 +338,28 @@ public class Reports {
         }
         
         String wagonsOutService = "SELECT"
-                + " id_vozna,"
-                + " hmotnost,"
-                + " Spolocnost.nazov as spolocnostNazov,"
+                + " Vozen.id_vozna as id_vozna,"
+                + " Vozen.hmotnost as hmotnost,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnostNazov"
                 + " from Typ_vozna"
                 + " join Vozen  using(id_typu)"
-                + " join Vozen_spolocnost using(id_vozna)"
+                + " join Sprava_voznov on(Sprava_voznov.id_vozna = Vozen.id_vozna) "
+                + " join Vozen_spolocnost on(Vozen_spolocnost.id_vozna = Vozen.id_vozna)"
                 + " join Spolocnost using(id_spolocnosti)"
-                + " join Snimanie using(id_vozna)"
+                + " join Snimanie on(Vozen.id_vozna = Snimanie.id_vozna) "
                 + " join Snimac using(id_snimacu)"
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " join Stanica using (id_stanice)"
-                + " and Sprava_voznov.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " where Sprava_voznov.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
                 + " and (Sprava_voznov.datum_do >= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS') or Sprava_voznov.datum_do is null)"
                 + wagonType + company;
        
         String wagonsInService = "SELECT"
                 + " Vozen.id_vozna as id_vozna,"
                 + " Vozen.HMOTNOST as hmotnost,"
-                + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnostNazov"
                 + " from Typ_vozna"
                 + " join Vozen  using(id_typu)"
                 + " join Vozen_spolocnost on(Vozen_spolocnost.id_vozna = Vozen.id_vozna )"
@@ -369,7 +370,7 @@ public class Reports {
                 + " join Snimac using(id_snimacu)"
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " join Stanica using (id_stanice)"
-                + " and Sprava_voznov.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " where Sprava_voznov.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
                 + " and (Sprava_voznov.datum_do >= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS') or Sprava_voznov.datum_do is null)"
                 + wagonType + company;
         
