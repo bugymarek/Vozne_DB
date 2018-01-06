@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.sql.*;
 
 public class DBManager {
-
+ 
     Connection conn = null;
     PreparedStatement pstmt = null;
     Statement stmt = null;
