@@ -167,6 +167,10 @@ public class App extends javax.swing.JFrame {
         jComboBoxScanner = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jTextFieldIdWagonDelete = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -576,13 +580,50 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Vyradenie vozňa"));
+
+        jLabel22.setText("Id vozňa *");
+
+        jButton6.setText("Vyraď");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldIdWagonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldIdWagonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6)
+                    .addComponent(jLabel22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -590,7 +631,9 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Vozňe", jPanel5);
@@ -874,7 +917,7 @@ public class App extends javax.swing.JFrame {
         }
         int companyId = DataManager.getCompanyId(company);
         int wagonTypId = DataManager.getWagonTypeId(wagonType);
-       
+
         InsertWagon insertWagon = new InsertWagon(idWagon, Integer.parseInt(weight), "N", wagonTypId, companyId, station, Integer.parseInt(scanner), new Date());
         if (DataManager.uniqueWagonId(idWagon)) {
             if (!DataManager.insertWagon(insertWagon)) {
@@ -884,7 +927,7 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             if (!DataManager.insertWagonIntoWagonCompany(insertWagon)) {
                 JOptionPane.showMessageDialog(this,
                         "Nepodarilo sa vložiť vozeň pre zvolenú spoločnosť.",
@@ -892,7 +935,7 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             if (!DataManager.scannWagon(insertWagon)) {
                 JOptionPane.showMessageDialog(this,
                         "Nepodarilo sa odsnímať vytvorený vozeň.",
@@ -900,19 +943,19 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             Record record = new Record(null, new Date(), "Pridanie vozňa s id: " + insertWagon.getIdWagon() + " do systému.", User.getLogin());
             DataManager.insertRecord(record);
-            
+
             JOptionPane.showMessageDialog(this, "Úspešné vytvorenie vozňa "
-                    + "\nId vozňa: " + idWagon 
-                    + "\nhmotnosť: " + weight 
-                    + "\nTyp vozňa: " + wagonType 
-                    + "\nSpoločnosť: " + company 
-                    + "\nStanica: " + station 
-                    + "\nId snímača: " + scanner 
+                    + "\nId vozňa: " + idWagon
+                    + "\nhmotnosť: " + weight
+                    + "\nTyp vozňa: " + wagonType
+                    + "\nSpoločnosť: " + company
+                    + "\nStanica: " + station
+                    + "\nId snímača: " + scanner
             );
-            
+
         } else {
             JOptionPane.showMessageDialog(this,
                     "Id vozňa " + idWagon + " už existuje.",
@@ -920,6 +963,35 @@ public class App extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String idWagon = jTextFieldIdWagonDelete.getText();
+        if (!DataManager.uniqueWagonId(idWagon)) {
+
+            if (DataManager.isWagonConnectToTrain(idWagon)) {
+                if (!DataManager.disconnectWagonInTrain(idWagon)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Chyba databaza sql. Nepodarilo sa vyradit vozen.",
+                            "Chyba",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+
+            DataManager.setWagonOutOfService(idWagon);
+            Record record = new Record(null, new Date(), "Vyradenie vozňa s id: " + idWagon + " do systému.", User.getLogin());
+            DataManager.insertRecord(record);
+            JOptionPane.showMessageDialog(this, "Úspešné vyradenie vozňa"
+                    + "\nId vozňa: " + idWagon
+            );
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Id vozňa " + idWagon + " sa nenašlo.",
+                    "Chyba",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
@@ -938,6 +1010,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBoxSortByFullName;
     private javax.swing.JComboBox<String> jComboBoxCompanies;
     private javax.swing.JComboBox<String> jComboBoxScanner;
@@ -958,6 +1031,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -976,6 +1050,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -985,6 +1060,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCountrzShortCut;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldIdWagon;
+    private javax.swing.JTextField jTextFieldIdWagonDelete;
     private javax.swing.JTextField jTextFieldPassword;
     private javax.swing.JTextField jTextFieldStreat;
     private javax.swing.JTextField jTextFieldUserLastName;

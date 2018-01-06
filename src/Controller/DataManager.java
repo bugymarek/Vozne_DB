@@ -80,6 +80,48 @@ public class DataManager {
         return result;
     }
 
+    public boolean isWagonConnectToTrain(String id) {
+        boolean result = true;
+        id = addApostrofs(id);
+        ResultSet rs = DbManager.querySQL("SELECT"
+                + " *"
+                + " FROM"
+                + " Snimanie"
+                + " WHERE id_vozna = " + id
+        );
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    result = false;
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public boolean setWagonOutOfService(String id) {
+        id = addApostrofs(id);
+        return DbManager.updateSql("Update Vozen set"
+                + " v_prevadzke = 'N'"
+                + " where id_vozna = " + id
+        );
+    }
+    
+    public boolean disconnectWagonInTrain(String id) {
+        id = addApostrofs(id);
+        return DbManager.updateSql("Update Sprava_voznov set"
+                + " datum_do = sysdate"
+                + " where datum_do is null" 
+                + " and id_vozna = " + id
+        );
+    }
+
     public ArrayList<String> getStationNames() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
@@ -450,7 +492,7 @@ public class DataManager {
 
         return DbManager.insertSql(query);
     }
-    
+
     public boolean insertWagonIntoWagonCompany(InsertWagon wagon) {
         String query
                 = "insert into Vozen_spolocnost values("
@@ -461,7 +503,7 @@ public class DataManager {
 
         return DbManager.insertSql(query);
     }
-    
+
     public boolean scannWagon(InsertWagon wagon) {
         String query
                 = "insert into Snimanie values("
@@ -584,8 +626,6 @@ public class DataManager {
 
         return result;
     }
-    
-    
 
     private String addApostrofs(String name) {
         return "'" + name + "'";
