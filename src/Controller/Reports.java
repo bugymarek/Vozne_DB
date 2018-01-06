@@ -46,7 +46,7 @@ public class Reports {
             company = " AND Spolocnost.nazov like " + addApostrofs(company);
         }
 
-        String wagonsOutService = "SELECT"
+        String wagonsOutServiceOnTrail = "SELECT"
                 + " id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -62,7 +62,23 @@ public class Reports {
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
 
-        String wagonsInService = "SELECT"
+        String wagonsOurServiceOnstation = "SELECT"
+                + "                  id_vozna,"
+                + "                  Spolocnost.nazov as spolocnostNazov,"
+                + "                  Typ_vozna.nazov as typ_vozna_nazov,"
+                + "                  v_prevadzke"
+                + "                  FROM Typ_vozna"
+                + "                  join Vozen using(id_typu)"
+                + "                  join Vozen_spolocnost using(id_vozna)"
+                + "                  join Spolocnost using(id_spolocnosti)"
+                + "                  join Snimanie using(id_vozna)"
+                + "                  join Snimac using(id_snimacu)"
+                + "                  join Stanica using(id_snimacu)"
+                + " where id_stanice like " + idStation
+                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + wagonType + inService + company;
+
+        String wagonsInServiceOnTrail = "SELECT"
                 + " Vozen.id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -76,29 +92,51 @@ public class Reports {
                 + " join Snimanie using(id_vlaku)"
                 + " join Snimac using(id_snimacu)"
                 + " join Kolajovy_usek using(id_snimacu)"
-                + " join Stanica using (id_stanice)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
+        
+        String wagonsInServiceOnStation = "SELECT"
+                + " Vozen.id_vozna,"
+                + " Spolocnost.nazov as spolocnostNazov,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " v_prevadzke"
+                + " FROM  Typ_vozna"
+                + " join Vozen  using(id_typu)"
+                + " join Vozen_spolocnost on(Vozen_spolocnost.id_vozna = Vozen.id_vozna )"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Sprava_voznov on(Sprava_voznov.id_vozna = Vozen.id_vozna )"
+                + " join Vlak using(id_vlaku)"
+                + " join Snimanie using(id_vlaku)"
+                + " join Snimac using(id_snimacu)"
+                + " join Stanica using(id_snimacu)"
+                + " where id_stanice like " + idStation
+                + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + wagonType + inService + company;
+
         List<WagonOnStation> result = new ArrayList<>();
-        ResultSet rs = DbManager.querySQL(wagonsOutService + " UNION " + wagonsInService);
+        
+        String[] selects = {wagonsOutServiceOnTrail, wagonsOurServiceOnstation, wagonsInServiceOnTrail, wagonsInServiceOnStation};
 
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    String idWagon = rs.getString("id_vozna");
-                    String spolocnostNazov = rs.getString("spolocnostNazov");
-                    String inServiceDb = rs.getString("v_prevadzke");
-                    String wagonTypeDb = rs.getString("typ_vozna_nazov");
-                    WagonOnStation wagonOnStation = new WagonOnStation(idWagon, inServiceDb, wagonTypeDb, spolocnostNazov);
-                    result.add(wagonOnStation);
+        for (int i = 0; i < selects.length; i++) {
+            ResultSet rs = DbManager.querySQL(selects[i]);
+            try {
+                if (rs != null) {
+                    while (rs.next()) {
+                        String idWagon = rs.getString("id_vozna");
+                        String spolocnostNazov = rs.getString("spolocnostNazov");
+                        String inServiceDb = rs.getString("v_prevadzke");
+                        String wagonTypeDb = rs.getString("typ_vozna_nazov");
+                        WagonOnStation wagonOnStation = new WagonOnStation(idWagon, inServiceDb, wagonTypeDb, spolocnostNazov);
+                        result.add(wagonOnStation);
+                    }
+                    rs.close();
+
                 }
-                rs.close();
 
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return result;
@@ -326,8 +364,8 @@ public class Reports {
 
         return result;
     }
-    
-    public List<HistoricalWagonLocation> getHistoricalLocationData(String idWagon,Date dateFrom, Date datesTo) {
+
+    public List<HistoricalWagonLocation> getHistoricalLocationData(String idWagon, Date dateFrom, Date datesTo) {
         String datFrom = Formater.format(dateFrom);
         String datTO = Formater.format(datesTo);
         String wagonsOutService = "SELECT"
@@ -335,9 +373,8 @@ public class Reports {
                 + " from Snimanie "
                 + " join Snimac using(id_snimacu)"
                 + " left join Stanica using (id_snimacu)"
-                + " where id_vozna like " +addApostrofs(idWagon)
+                + " where id_vozna like " + addApostrofs(idWagon)
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
-               
 
         String wagonsInService = "SELECT"
                 + " st.nazov as nazov,"
@@ -350,7 +387,7 @@ public class Reports {
                 + " join Snimanie sn on(sn.id_vlaku = v.id_vlaku ) "
                 + " join Snimac s using(id_snimacu)"
                 + " left join Stanica st using (id_snimacu)"
-                + " where sv.id_vozna like " +addApostrofs(idWagon)
+                + " where sv.id_vozna like " + addApostrofs(idWagon)
                 + " AND TO_DATE (TO_CHAR (sn.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')";
         List<HistoricalWagonLocation> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL(wagonsOutService + " UNION " + wagonsInService);
@@ -363,7 +400,7 @@ public class Reports {
                     double latitud = rs.getDouble("ZEM_SIRKA");
                     Date timeFrom = rs.getDate("cas_od");
                     Date timeTo = rs.getDate("cas_do");
-                    HistoricalWagonLocation historyLocation = new HistoricalWagonLocation(nazov, longitud, latitud, timeFrom,timeTo);
+                    HistoricalWagonLocation historyLocation = new HistoricalWagonLocation(nazov, longitud, latitud, timeFrom, timeTo);
                     result.add(historyLocation);
                 }
                 rs.close();
@@ -373,8 +410,7 @@ public class Reports {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
+
         return result;
     }
 
