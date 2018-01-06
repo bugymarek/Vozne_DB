@@ -18,7 +18,7 @@ public class DBManager {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "kormanak4", "monika");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bugaj6", "ax14ne");
             System.out.println("Connected database successfully...");
         } catch (Exception e) {
             //Handle errors for Class.forName
