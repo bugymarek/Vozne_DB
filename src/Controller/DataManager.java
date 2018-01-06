@@ -9,6 +9,7 @@ import Model.InsertWagon;
 import Model.Record;
 import Model.User;
 import Model.PersonNested;
+import Model.Scanner;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -273,6 +274,34 @@ public class DataManager {
 
         return result;
     }
+    
+    public int getCurrentTrainId(String wagonId) {
+        int result = -1;
+        String query = "SELECT"
+                + " id_vlaku"
+                + " FROM"
+                + " Sprava_voznov"
+                + " WHERE id_vozna like " + addApostrofs(wagonId)
+                + " and datum_do is null";
+
+        ResultSet rs = DbManager.querySQL(query);
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    //Retrieve by column name
+                    result = rs.getInt("id_vlaku");
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public int getWagonTypeId(String name) {
         int result = -1;
@@ -480,7 +509,7 @@ public class DataManager {
                 + addApostrofs(user.getLastName()) + ")";
 
         DbManager.insertSql(query);
-    }
+    }   
 
     public boolean insertWagon(InsertWagon wagon) {
         String query
@@ -513,6 +542,19 @@ public class DataManager {
                 + addApostrofs(wagon.getIdWagon()) + ","
                 + "null,"
                 + "null)";
+
+        return DbManager.insertSql(query);
+    }
+    
+    public boolean scannWagonOnStation(Scanner scanner) {
+        String query
+                = "insert into Snimanie values("
+                + "TO_DATE(" + addApostrofs(Formater.format(scanner.getDateFrom())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
+                +  scanner.getLocomotiveId() + ","
+                + scanner.getScannerId() + ","
+                + addApostrofs(scanner.getWagonId()) + ","
+                + scanner.getTrainId()+ ","
+                + scanner.getDateTo() + ")";
 
         return DbManager.insertSql(query);
     }
