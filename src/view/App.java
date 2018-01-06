@@ -7,6 +7,7 @@ package view;
 
 import Controller.Account;
 import Controller.DataManager;
+import Model.InsertWagon;
 import Model.Record;
 import Model.User;
 import Model.PersonNested;
@@ -23,6 +24,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -149,6 +152,21 @@ public class App extends javax.swing.JFrame {
         jCheckBoxSortByFullName = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePersonList = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jTextFieldIdWagon = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextFieldWeight = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jComboBoxWagonTypeInser = new javax.swing.JComboBox<>();
+        jComboBoxCompanies = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        jComboBoxStationInsertWagon = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        jComboBoxScanner = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -238,11 +256,11 @@ public class App extends javax.swing.JFrame {
 
         jLabel12.setText("Ulica *");
 
-        jLabel13.setText("Mesto");
+        jLabel13.setText("Mesto *");
 
         jLabel14.setText("Štát *");
 
-        jLabel15.setText("Skratka štátu");
+        jLabel15.setText("Skratka štátu *");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -318,8 +336,8 @@ public class App extends javax.swing.JFrame {
                                     .addComponent(jLabel10))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBoxUserFunction, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxUserFunction, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextFieldEmail))
                                 .addGap(159, 159, 159)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -421,6 +439,162 @@ public class App extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Zoznam osôb", jPanel1);
 
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Pridanie vozňa"));
+
+        jLabel16.setText("Id vozňa *");
+
+        jLabel17.setText("Hmotnosť *");
+
+        jLabel18.setText("Typ vozňa *");
+
+        jComboBoxWagonTypeInser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxWagonTypeInserMouseClicked(evt);
+            }
+        });
+        jComboBoxWagonTypeInser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxWagonTypeInserActionPerformed(evt);
+            }
+        });
+
+        jComboBoxCompanies.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxCompaniesMouseClicked(evt);
+            }
+        });
+        jComboBoxCompanies.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCompaniesActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Spoločnosť *");
+
+        jComboBoxStationInsertWagon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxStationInsertWagonItemStateChanged(evt);
+            }
+        });
+        jComboBoxStationInsertWagon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxStationInsertWagonMouseClicked(evt);
+            }
+        });
+        jComboBoxStationInsertWagon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxStationInsertWagonActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Stanica *");
+
+        jComboBoxScanner.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxScannerMouseClicked(evt);
+            }
+        });
+        jComboBoxScanner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxScannerActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Id snímač *");
+
+        jButton5.setText("Pridaj");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldWeight)
+                    .addComponent(jLabel18)
+                    .addComponent(jComboBoxWagonTypeInser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxCompanies, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(0, 161, Short.MAX_VALUE))
+                            .addComponent(jComboBoxScanner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxScanner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxCompanies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxWagonTypeInser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(378, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Vozňe", jPanel5);
+
         jLabel11.setText("Login");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -435,26 +609,22 @@ public class App extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                                .addComponent(jLabelFunction, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                    .addComponent(jLabelLastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jXLabelLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                            .addComponent(jLabelLastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jXLabelLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelFunction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(jLabelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 138, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,7 +694,7 @@ public class App extends javax.swing.JFrame {
         }
         User user = new User(rc, name, lastName, email, Account.hashPassword(password), idFunkcion, PhotoBlob);
         PersonNested userNested = new PersonNested(rc, name, lastName, streat, city, country, coutryShortCut);
-        
+
         if (DataManager.uniqueLogIn(email)) {
             if (DataManager.uniqueRC(rc)) {
                 DataManager.insertPerson(user);
@@ -536,9 +706,9 @@ public class App extends javax.swing.JFrame {
                 DataManager.insertRecord(record);
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "Nepodarilo sa vytovoriť nového uživateľa.",
-                    "Chyba",
-                    JOptionPane.WARNING_MESSAGE);
+                        "Nepodarilo sa vytovoriť nového uživateľa.",
+                        "Chyba",
+                        JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this,
@@ -549,9 +719,9 @@ public class App extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    
+
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-      
+
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -594,8 +764,23 @@ public class App extends javax.swing.JFrame {
     // refresh comboboxes
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         DataManager dm = new DataManager(new DBManager());
-        List<String> stations = dm.getFunctionNames();
-        jComboBoxUserFunction.setModel(new DefaultComboBoxModel(stations.toArray()));
+
+        List<String> functions = dm.getFunctionNames();
+        jComboBoxUserFunction.setModel(new DefaultComboBoxModel(functions.toArray()));
+
+        List<String> stations = dm.getStationNames();
+        jComboBoxStationInsertWagon.setModel(new DefaultComboBoxModel(stations.toArray()));
+
+        String stationName = String.valueOf(jComboBoxStationInsertWagon.getSelectedItem());
+        List<Integer> scanners = new ArrayList<>(Arrays.asList(dm.getStationScannerId(stationName)));
+        scanners.addAll(dm.getScannersOfStation(stationName));
+        jComboBoxScanner.setModel(new DefaultComboBoxModel(scanners.toArray()));
+
+        List<String> companies = dm.getCompanyNames();
+        jComboBoxCompanies.setModel(new DefaultComboBoxModel(companies.toArray()));
+
+        List<String> wagonTypes = dm.getWagonTypes();
+        jComboBoxWagonTypeInser.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -604,9 +789,9 @@ public class App extends javax.swing.JFrame {
         Thread t1 = new Thread(new Runnable() {
             public void run() {
                 int i = 0;
-                
+
                 boolean check = jCheckBoxSortByFullName.isSelected();
-                
+
                 List<PersonNested> persons = AppController.getPersons(check);
                 Object[][] o = new Object[persons.size()][7];
                 for (PersonNested person : persons) {
@@ -628,6 +813,111 @@ public class App extends javax.swing.JFrame {
         t1.start();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jComboBoxWagonTypeInserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxWagonTypeInserMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxWagonTypeInserMouseClicked
+
+    private void jComboBoxWagonTypeInserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWagonTypeInserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxWagonTypeInserActionPerformed
+
+    private void jComboBoxCompaniesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxCompaniesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCompaniesMouseClicked
+
+    private void jComboBoxCompaniesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCompaniesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCompaniesActionPerformed
+
+    private void jComboBoxStationInsertWagonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxStationInsertWagonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationInsertWagonMouseClicked
+
+    private void jComboBoxStationInsertWagonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxStationInsertWagonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationInsertWagonActionPerformed
+
+    private void jComboBoxScannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxScannerMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxScannerMouseClicked
+
+    private void jComboBoxScannerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScannerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxScannerActionPerformed
+
+    private void jComboBoxStationInsertWagonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxStationInsertWagonItemStateChanged
+        DataManager dm = new DataManager(new DBManager());
+        String stationName = String.valueOf(jComboBoxStationInsertWagon.getSelectedItem());
+        List<Integer> scanners = new ArrayList<>(Arrays.asList(dm.getStationScannerId(stationName)));
+        scanners.addAll(dm.getScannersOfStation(stationName));
+        jComboBoxScanner.setModel(new DefaultComboBoxModel(scanners.toArray()));
+    }//GEN-LAST:event_jComboBoxStationInsertWagonItemStateChanged
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String wagonType = String.valueOf(jComboBoxWagonTypeInser.getSelectedItem());
+        String company = String.valueOf(jComboBoxCompanies.getSelectedItem());
+        String station = String.valueOf(jComboBoxStationInsertWagon.getSelectedItem());
+        String scanner = String.valueOf(jComboBoxScanner.getSelectedItem());
+        String idWagon = jTextFieldIdWagon.getText();
+        String weight = jTextFieldWeight.getText();
+        if (isNullOrEmpty(wagonType)
+                || isNullOrEmpty(company)
+                || isNullOrEmpty(station)
+                || isNullOrEmpty(scanner)
+                || isNullOrEmpty(idWagon)
+                || isNullOrEmpty(weight)) {
+            JOptionPane.showMessageDialog(this,
+                    "Vyplňte všetky údaje označené hviezdičkou.",
+                    "Chyba",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int companyId = DataManager.getCompanyId(company);
+        int wagonTypId = DataManager.getWagonTypeId(wagonType);
+       
+        InsertWagon insertWagon = new InsertWagon(idWagon, Integer.parseInt(weight), "N", wagonTypId, companyId, station, Integer.parseInt(scanner), new Date());
+        if (DataManager.uniqueWagonId(idWagon)) {
+            if (!DataManager.insertWagon(insertWagon)) {
+                JOptionPane.showMessageDialog(this,
+                        "Nepodarilo sa vložiť vozeň.",
+                        "Chyba",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (!DataManager.insertWagonIntoWagonCompany(insertWagon)) {
+                JOptionPane.showMessageDialog(this,
+                        "Nepodarilo sa vložiť vozeň pre zvolenú spoločnosť.",
+                        "Chyba",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (!DataManager.scannWagon(insertWagon)) {
+                JOptionPane.showMessageDialog(this,
+                        "Nepodarilo sa odsnímať vytvorený vozeň.",
+                        "Chyba",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Úspešné vytvorenie vozňa "
+                    + "\nId vozňa: " + idWagon 
+                    + "\nhmotnosť: " + weight 
+                    + "\nTyp vozňa: " + wagonType 
+                    + "\nSpoločnosť: " + company 
+                    + "\nStanica: " + station 
+                    + "\nId snímača: " + scanner 
+            );
+            
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Id vozňa " + idWagon + " už existuje.",
+                    "Chyba",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -644,8 +934,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBoxSortByFullName;
+    private javax.swing.JComboBox<String> jComboBoxCompanies;
+    private javax.swing.JComboBox<String> jComboBoxScanner;
+    private javax.swing.JComboBox<String> jComboBoxStationInsertWagon;
     private javax.swing.JComboBox<String> jComboBoxUserFunction;
+    private javax.swing.JComboBox<String> jComboBoxWagonTypeInser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -653,7 +948,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -670,6 +971,8 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -678,11 +981,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCountry;
     private javax.swing.JTextField jTextFieldCountrzShortCut;
     private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldIdWagon;
     private javax.swing.JTextField jTextFieldPassword;
     private javax.swing.JTextField jTextFieldStreat;
     private javax.swing.JTextField jTextFieldUserLastName;
     private javax.swing.JTextField jTextFieldUserName;
     private javax.swing.JTextField jTextFieldUserRC;
+    private javax.swing.JTextField jTextFieldWeight;
     private org.jdesktop.swingx.JXLabel jXLabelLogIn;
     // End of variables declaration//GEN-END:variables
 

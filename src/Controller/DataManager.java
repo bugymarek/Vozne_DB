@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.InsertWagon;
 import Model.Record;
 import Model.User;
 import Model.PersonNested;
@@ -102,6 +103,36 @@ public class DataManager {
         return result;
     }
 
+    public ArrayList<Integer> getScannersOfStation(String name) {
+        ArrayList<Integer> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL("select"
+                + " Stanica.id_snimacu as stanica_id_snimacu,"
+                + " Kolajovy_usek.id_snimacu as kolajovy_usek_id_snimacu"
+                + " from stanica"
+                + " join kolajovy_usek using(id_stanice)"
+                + " where nazov like " + addApostrofs(name)
+                + " and kolajovy_usek.id_snimacu not in("
+                + " select id_snimacu"
+                + " from Kolajovy_usek"
+                + " group by id_snimacu"
+                + " having count(id_snimacu) > 1)"
+        );
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    result.add(rs.getInt("kolajovy_usek_id_snimacu"));
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public ArrayList<String> getWagonId() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
@@ -163,6 +194,87 @@ public class DataManager {
                 rs.next();
                 //Retrieve by column name
                 result = rs.getInt("id_stanice");
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public int getStationScannerId(String name) {
+        int result = -1;
+        String query = "SELECT"
+                + "  id_snimacu"
+                + " FROM"
+                + " Stanica"
+                + " WHERE nazov like " + addApostrofs(name);
+
+        ResultSet rs = DbManager.querySQL(query);
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    //Retrieve by column name
+                    result = rs.getInt("id_snimacu");
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public int getWagonTypeId(String name) {
+        int result = -1;
+        String query = "SELECT"
+                + " id_typu"
+                + " FROM"
+                + " Typ_vozna"
+                + " WHERE nazov like " + addApostrofs(name);
+
+        ResultSet rs = DbManager.querySQL(query);
+        try {
+            if (rs != null) {
+
+                rs.next();
+                //Retrieve by column name
+                result = rs.getInt("id_typu");
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public int getCompanyId(String name) {
+        DBManager dm = new DBManager();
+        int result = -1;
+        name = addApostrofs(name);
+        String query = "SELECT"
+                + " id_spolocnosti"
+                + " FROM"
+                + " Spolocnost"
+                + " WHERE nazov like " + name;
+
+        ResultSet rs = dm.querySQL(query);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    result = rs.getInt("id_spolocnosti");
+                }
                 rs.close();
 
             }
@@ -328,17 +440,52 @@ public class DataManager {
         DbManager.insertSql(query);
     }
 
+    public boolean insertWagon(InsertWagon wagon) {
+        String query
+                = "insert into Vozen values("
+                + addApostrofs(wagon.getIdWagon()) + ","
+                + wagon.getType() + ","
+                + wagon.getWeight() + ","
+                + "'N')";
+
+        return DbManager.insertSql(query);
+    }
+    
+    public boolean insertWagonIntoWagonCompany(InsertWagon wagon) {
+        String query
+                = "insert into Vozen_spolocnost values("
+                + addApostrofs(wagon.getIdWagon()) + ","
+                + wagon.getCompany() + ","
+                + "TO_DATE(" + addApostrofs(Formater.format(wagon.getDate())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
+                + "null)";
+
+        return DbManager.insertSql(query);
+    }
+    
+    public boolean scannWagon(InsertWagon wagon) {
+        String query
+                = "insert into Snimanie values("
+                + "TO_DATE(" + addApostrofs(Formater.format(wagon.getDate())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
+                + "null,"
+                + wagon.getScannerId() + ","
+                + addApostrofs(wagon.getIdWagon()) + ","
+                + "null,"
+                + "null)";
+
+        return DbManager.insertSql(query);
+    }
+
     public void insertPersonToNestedTable(PersonNested user) {
         String query
                 = "INSERT INTO osoba_nested (rod_cislo, meno, priezvisko, adresa) values ("
                 + addApostrofs(user.getRc()) + ","
-                        + addApostrofs(user.getName()) + ","
-                        + addApostrofs(user.getLastName()) + ","
-                        + " adresa_tab(t_adresa("
-                        + addApostrofs(user.getStreat()) + ","
-                        + addApostrofs(user.getCity()) + ","
-                        + addApostrofs(user.getCountry()) + ","
-                        + addApostrofs(user.getCountryShortCut()) + ")))";
+                + addApostrofs(user.getName()) + ","
+                + addApostrofs(user.getLastName()) + ","
+                + " adresa_tab(t_adresa("
+                + addApostrofs(user.getStreat()) + ","
+                + addApostrofs(user.getCity()) + ","
+                + addApostrofs(user.getCountry()) + ","
+                + addApostrofs(user.getCountryShortCut()) + ")))";
 
         DbManager.insertSql(query);
     }
@@ -388,7 +535,7 @@ public class DataManager {
                 + " count(*) as count"
                 + " FROM"
                 + " Osoba"
-                + " WHERE rod_cislo like " + rc
+                + " WHERE rod_cislo = " + rc
         );
         try {
             if (rs != null) {
@@ -408,6 +555,37 @@ public class DataManager {
 
         return result;
     }
+
+    public boolean uniqueWagonId(String id) {
+        id = addApostrofs(id);
+        boolean result = false;
+
+        ResultSet rs = DbManager.querySQL("SELECT"
+                + " count(*) as count"
+                + " FROM"
+                + " Vozen"
+                + " WHERE id_vozna = " + id
+        );
+        try {
+            if (rs != null) {
+
+                rs.next();
+                //Retrieve by column name
+                int count = rs.getInt("count");
+                if (count == 0) {
+                    result = true;
+                }
+                rs.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    
 
     private String addApostrofs(String name) {
         return "'" + name + "'";

@@ -920,7 +920,7 @@ public class Reports extends javax.swing.JDialog {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
          Thread t1 = new Thread(new Runnable() {
             public void run() {
-                List<String> stations = DataManager.getStationNames();
+        List<String> stations = DataManager.getStationNames();
         jComboBoxStationName.setModel(new DefaultComboBoxModel(stations.toArray()));
 
         List<String> stations2 = new ArrayList<>(Arrays.asList(""));
