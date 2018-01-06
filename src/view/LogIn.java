@@ -107,8 +107,8 @@ private Account Account;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
        //boolean result = Account.logIn(UserNameTextField.getText(), PasswordTextField.getText());
-       boolean result = Account.logIn("Peter_Novak_841106/3456@gmail.com", "841106/3456");
-       //boolean result = Account.logIn("Zdenko_Olzbut_830420/8088@gmail.com", "830420/8088");
+      // boolean result = Account.logIn("Peter_Novak_841106/3456@gmail.com", "841106/3456");
+       boolean result = Account.logIn("Zdenko_Olzbut_830420/8088@gmail.com", "830420/8088");
        if(!result){
            JOptionPane.showMessageDialog(this, "Nesprávne meno alebo heslo");
        }else
