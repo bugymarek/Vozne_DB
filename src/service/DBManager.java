@@ -18,7 +18,7 @@ public class DBManager {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bugaj6", "ax14ne");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "kormanak4", "monika");
             System.out.println("Connected database successfully...");
         } catch (Exception e) {
             //Handle errors for Class.forName
@@ -83,4 +83,21 @@ public class DBManager {
         return result;
     }
 
+    public boolean updateSql(String query) {
+        boolean result = true;
+        try {
+            //STEP 4: Execute a query
+            pstmt = conn.prepareStatement(query);
+            pstmt.executeUpdate();
+
+            //return stmt.executeQuery(query);
+        } catch (SQLException se) {
+            result = false;
+           se.printStackTrace();
+        } catch (Exception e) {
+            result = false;
+            e.printStackTrace();
+        }
+        return result;
+   }
 }//end JDBCExample
