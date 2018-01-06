@@ -917,7 +917,7 @@ public class App extends javax.swing.JFrame {
         }
         int companyId = DataManager.getCompanyId(company);
         int wagonTypId = DataManager.getWagonTypeId(wagonType);
-       
+
         InsertWagon insertWagon = new InsertWagon(idWagon, Integer.parseInt(weight), "N", wagonTypId, companyId, station, Integer.parseInt(scanner), new Date());
         if (DataManager.uniqueWagonId(idWagon)) {
             if (!DataManager.insertWagon(insertWagon)) {
@@ -927,7 +927,7 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             if (!DataManager.insertWagonIntoWagonCompany(insertWagon)) {
                 JOptionPane.showMessageDialog(this,
                         "Nepodarilo sa vložiť vozeň pre zvolenú spoločnosť.",
@@ -935,7 +935,7 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             if (!DataManager.scannWagon(insertWagon)) {
                 JOptionPane.showMessageDialog(this,
                         "Nepodarilo sa odsnímať vytvorený vozeň.",
@@ -943,19 +943,19 @@ public class App extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             Record record = new Record(null, new Date(), "Pridanie vozňa s id: " + insertWagon.getIdWagon() + " do systému.", User.getLogin());
             DataManager.insertRecord(record);
-            
+
             JOptionPane.showMessageDialog(this, "Úspešné vytvorenie vozňa "
-                    + "\nId vozňa: " + idWagon 
-                    + "\nhmotnosť: " + weight 
-                    + "\nTyp vozňa: " + wagonType 
-                    + "\nSpoločnosť: " + company 
-                    + "\nStanica: " + station 
-                    + "\nId snímača: " + scanner 
+                    + "\nId vozňa: " + idWagon
+                    + "\nhmotnosť: " + weight
+                    + "\nTyp vozňa: " + wagonType
+                    + "\nSpoločnosť: " + company
+                    + "\nStanica: " + station
+                    + "\nId snímača: " + scanner
             );
-            
+
         } else {
             JOptionPane.showMessageDialog(this,
                     "Id vozňa " + idWagon + " už existuje.",
@@ -966,26 +966,31 @@ public class App extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String idWagon = jTextFieldIdWagonDelete.getText();
-         if (!DataManager.uniqueWagonId(idWagon)) {
-             
-             if(DataManager.isWagonConnectToTrain(idWagon)){
-                if(!DataManager.disconnectWagonInTrain(idWagon)){
+        if (!DataManager.uniqueWagonId(idWagon)) {
+
+            if (DataManager.isWagonConnectToTrain(idWagon)) {
+                if (!DataManager.disconnectWagonInTrain(idWagon)) {
                     JOptionPane.showMessageDialog(this,
-                    "Chyba databaza sql. Nepodarilo sa vyradit vozen.",
-                    "Chyba",
-                    JOptionPane.WARNING_MESSAGE);
+                            "Chyba databaza sql. Nepodarilo sa vyradit vozen.",
+                            "Chyba",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-             }
-             
-             DataManager.setWagonOutOfService(idWagon);
-             
-         } else {
-             JOptionPane.showMessageDialog(this,
+            }
+
+            DataManager.setWagonOutOfService(idWagon);
+            Record record = new Record(null, new Date(), "Vyradenie vozňa s id: " + idWagon + " do systému.", User.getLogin());
+            DataManager.insertRecord(record);
+            JOptionPane.showMessageDialog(this, "Úspešné vyradenie vozňa"
+                    + "\nId vozňa: " + idWagon
+            );
+
+        } else {
+            JOptionPane.showMessageDialog(this,
                     "Id vozňa " + idWagon + " sa nenašlo.",
                     "Chyba",
                     JOptionPane.WARNING_MESSAGE);
-         }
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
