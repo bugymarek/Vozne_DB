@@ -12,12 +12,14 @@ import Model.PersonNested;
 import Model.Scanner;
 import Model.Scanning;
 import Model.WagonInTrain;
+import Model.WagonOnStation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import service.DBManager;
@@ -498,6 +500,56 @@ public class DataManager {
         }
 
         return s;
+    }
+    
+     public List<String> getCurrentWagonOnStation(int idStation) {
+
+        String wagonsOutServiceOnTrail = "SELECT"
+                + " id_vozna"
+                + " FROM Typ_vozna"
+                + " join Vozen using(id_typu)"
+                + " join Vozen_spolocnost using(id_vozna)"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Snimanie using(id_vozna)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " where id_stanice like " + idStation
+                + " AND cas_do is null";
+
+        String wagonsOutServiceOnstation = "SELECT"
+                + "                  id_vozna"
+                + "                  FROM Typ_vozna"
+                + "                  join Vozen using(id_typu)"
+                + "                  join Vozen_spolocnost using(id_vozna)"
+                + "                  join Spolocnost using(id_spolocnosti)"
+                + "                  join Snimanie using(id_vozna)"
+                + "                  join Snimac using(id_snimacu)"
+                + "                  join Stanica using(id_snimacu)"
+                + " where id_stanice like " + idStation
+                + " AND cas_do is null";
+
+        List<String> result = new ArrayList<>();
+
+        String[] selects = {wagonsOutServiceOnTrail, wagonsOutServiceOnstation};
+
+        for (int i = 0; i < selects.length; i++) {
+            ResultSet rs = DbManager.querySQL(selects[i]);
+            try {
+                if (rs != null) {
+                    while (rs.next()) {
+                        String idWagon = rs.getString("id_vozna");
+                        result.add(idWagon);
+                    }
+                    rs.close();
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
     public String getStationName(int id) {

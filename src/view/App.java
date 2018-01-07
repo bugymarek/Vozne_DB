@@ -155,20 +155,6 @@ public class App extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePersonList = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jTextFieldIdWagon = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jTextFieldWeight = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jComboBoxWagonTypeInser = new javax.swing.JComboBox<>();
-        jComboBoxCompanies = new javax.swing.JComboBox<>();
-        jLabel19 = new javax.swing.JLabel();
-        jComboBoxStationInsertWagon = new javax.swing.JComboBox<>();
-        jLabel20 = new javax.swing.JLabel();
-        jComboBoxScanner = new javax.swing.JComboBox<>();
-        jLabel21 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
@@ -187,6 +173,28 @@ public class App extends javax.swing.JFrame {
         jTextFieldIdTrain = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jComboBoxStationChangePosition = new javax.swing.JComboBox<>();
+        jLabel29 = new javax.swing.JLabel();
+        jComboBoxScannerChangePosition = new javax.swing.JComboBox<>();
+        jLabel30 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jComboBoxIDWagonChangePosition = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
+        jTextFieldIdWagon = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextFieldWeight = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jComboBoxWagonTypeInser = new javax.swing.JComboBox<>();
+        jComboBoxCompanies = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        jComboBoxStationInsertWagon = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        jComboBoxScanner = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -236,7 +244,7 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(624, Short.MAX_VALUE))
+                .addContainerGap(621, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reporty", jPanel3);
@@ -342,32 +350,24 @@ public class App extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jTextFieldUserLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jTextFieldUserName)
-                                        .addComponent(jTextFieldUserRC))
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBoxUserFunction, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEmail))
-                                .addGap(164, 164, 164)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldUserLastName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldUserRC, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxUserFunction, javax.swing.GroupLayout.Alignment.LEADING, 0, 289, Short.MAX_VALUE)
+                            .addComponent(jTextFieldUserName, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelFotoRegistration, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -404,9 +404,9 @@ public class App extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(29, 29, 29)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(22, 22, 22))
         );
@@ -454,148 +454,13 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Zoznam osôb", jPanel1);
 
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Pridanie vozňa"));
-
-        jLabel16.setText("Id vozňa *");
-
-        jLabel17.setText("Hmotnosť *");
-
-        jLabel18.setText("Typ vozňa *");
-
-        jComboBoxWagonTypeInser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxWagonTypeInserMouseClicked(evt);
-            }
-        });
-        jComboBoxWagonTypeInser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxWagonTypeInserActionPerformed(evt);
-            }
-        });
-
-        jComboBoxCompanies.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxCompaniesMouseClicked(evt);
-            }
-        });
-        jComboBoxCompanies.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCompaniesActionPerformed(evt);
-            }
-        });
-
-        jLabel19.setText("Spoločnosť *");
-
-        jComboBoxStationInsertWagon.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxStationInsertWagonItemStateChanged(evt);
-            }
-        });
-        jComboBoxStationInsertWagon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxStationInsertWagonMouseClicked(evt);
-            }
-        });
-        jComboBoxStationInsertWagon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxStationInsertWagonActionPerformed(evt);
-            }
-        });
-
-        jLabel20.setText("Stanica *");
-
-        jComboBoxScanner.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxScannerMouseClicked(evt);
-            }
-        });
-        jComboBoxScanner.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxScannerActionPerformed(evt);
-            }
-        });
-
-        jLabel21.setText("Id snímač *");
-
-        jButton5.setText("Pridaj");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldWeight))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.Alignment.TRAILING, 0, 200, Short.MAX_VALUE)
-                            .addComponent(jLabel20)
-                            .addComponent(jComboBoxWagonTypeInser, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel18))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCompanies, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxScanner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jLabel21))
-                                .addGap(0, 158, Short.MAX_VALUE))))
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxScanner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel16)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jLabel18))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxCompanies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jComboBoxWagonTypeInser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel20))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Vyradenie vozňa"));
 
@@ -618,7 +483,7 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldIdWagonDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -765,6 +630,105 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Zmena polohy vozňa na stanici"));
+
+        jLabel28.setText("Id vozňa *");
+
+        jComboBoxStationChangePosition.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxStationChangePositionItemStateChanged(evt);
+            }
+        });
+        jComboBoxStationChangePosition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxStationChangePositionMouseClicked(evt);
+            }
+        });
+        jComboBoxStationChangePosition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxStationChangePositionActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setText("Stanica *");
+
+        jComboBoxScannerChangePosition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxScannerChangePositionMouseClicked(evt);
+            }
+        });
+        jComboBoxScannerChangePosition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxScannerChangePositionActionPerformed(evt);
+            }
+        });
+
+        jLabel30.setText("Id snímač *");
+
+        jButton10.setText("Vyraď");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jComboBoxIDWagonChangePosition.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxIDWagonChangePositionItemStateChanged(evt);
+            }
+        });
+        jComboBoxIDWagonChangePosition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxIDWagonChangePositionMouseClicked(evt);
+            }
+        });
+        jComboBoxIDWagonChangePosition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxIDWagonChangePositionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel29)
+                        .addGap(174, 174, 174)
+                        .addComponent(jLabel30)
+                        .addGap(0, 166, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(jComboBoxIDWagonChangePosition, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxStationChangePosition, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxScannerChangePosition, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxStationChangePosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxScannerChangePosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxIDWagonChangePosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jButton10)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -775,26 +739,163 @@ public class App extends javax.swing.JFrame {
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
+        jPanel10.getAccessibleContext().setAccessibleName("Zmena polohy vozňa\n");
+
         jTabbedPane1.addTab("Vozňe", jPanel5);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Pridanie vozňa"));
+
+        jLabel16.setText("Id vozňa *");
+
+        jLabel17.setText("Hmotnosť *");
+
+        jLabel18.setText("Typ vozňa *");
+
+        jComboBoxWagonTypeInser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxWagonTypeInserMouseClicked(evt);
+            }
+        });
+        jComboBoxWagonTypeInser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxWagonTypeInserActionPerformed(evt);
+            }
+        });
+
+        jComboBoxCompanies.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxCompaniesMouseClicked(evt);
+            }
+        });
+        jComboBoxCompanies.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCompaniesActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Spoločnosť *");
+
+        jComboBoxStationInsertWagon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxStationInsertWagonItemStateChanged(evt);
+            }
+        });
+        jComboBoxStationInsertWagon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxStationInsertWagonMouseClicked(evt);
+            }
+        });
+        jComboBoxStationInsertWagon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxStationInsertWagonActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Stanica *");
+
+        jComboBoxScanner.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxScannerMouseClicked(evt);
+            }
+        });
+        jComboBoxScanner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxScannerActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Id snímač *");
+
+        jButton5.setText("Pridaj");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldWeight))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.Alignment.TRAILING, 0, 200, Short.MAX_VALUE)
+                            .addComponent(jLabel20)
+                            .addComponent(jComboBoxWagonTypeInser, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel18))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCompanies, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxScanner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel21))
+                                .addGap(0, 178, Short.MAX_VALUE))))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxScanner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel18))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldIdWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxCompanies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBoxWagonTypeInser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxStationInsertWagon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 507, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Vloženie vozňa", jPanel6);
 
         jLabel11.setText("Login");
 
@@ -973,18 +1074,23 @@ public class App extends javax.swing.JFrame {
         List<String> stations = dm.getStationNames();
         jComboBoxStationInsertWagon.setModel(new DefaultComboBoxModel(stations.toArray()));
         jComboBoxStationOutOfServiceWagon.setModel(new DefaultComboBoxModel(stations.toArray()));
-
+        jComboBoxStationChangePosition.setModel(new DefaultComboBoxModel(stations.toArray()));
+        
         String stationName = String.valueOf(jComboBoxStationInsertWagon.getSelectedItem());
         List<Integer> scanners = new ArrayList<>(Arrays.asList(dm.getStationScannerId(stationName)));
         scanners.addAll(dm.getScannersOfStation(stationName));
         jComboBoxScanner.setModel(new DefaultComboBoxModel(scanners.toArray()));
         jComboBoxOutOfServiceScanner.setModel(new DefaultComboBoxModel(scanners.toArray()));
+        jComboBoxScannerChangePosition.setModel(new DefaultComboBoxModel(scanners.toArray()));
+        List<String> wagons = dm.getCurrentWagonOnStation(dm.getStationId(stationName));
+        jComboBoxIDWagonChangePosition.setModel(new DefaultComboBoxModel(wagons.toArray()));
 
         List<String> companies = dm.getCompanyNames();
         jComboBoxCompanies.setModel(new DefaultComboBoxModel(companies.toArray()));
 
         List<String> wagonTypes = dm.getWagonTypes();
         jComboBoxWagonTypeInser.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+           
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -1155,11 +1261,11 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       String idWagon = jTextFieldIdWagonDelete1.getText();
-       String station = String.valueOf(jComboBoxStationOutOfServiceWagon.getSelectedItem());
-       String railScanner = String.valueOf(jComboBoxOutOfServiceScanner.getSelectedItem());
-       int idTrain = 0;
-       if (!DataManager.uniqueWagonId(idWagon)) {
+        String idWagon = jTextFieldIdWagonDelete1.getText();
+        String station = String.valueOf(jComboBoxStationOutOfServiceWagon.getSelectedItem());
+        String railScanner = String.valueOf(jComboBoxOutOfServiceScanner.getSelectedItem());
+        int idTrain = 0;
+        if (!DataManager.uniqueWagonId(idWagon)) {
 
             if (DataManager.isWagonConnectToTrain(idWagon)) {
                 idTrain = DataManager.getCurrentTrainId(idWagon);
@@ -1174,10 +1280,10 @@ public class App extends javax.swing.JFrame {
                 DataManager.scannWagon(scanner);
             } else {
                 JOptionPane.showMessageDialog(this,
-                            "Vagon s id: " + idWagon + " sa nenachádza vo vlaku",
-                            "Chyba",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
+                        "Vagon s id: " + idWagon + " sa nenachádza vo vlaku",
+                        "Chyba",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
             DataManager.setWagonService(idWagon, false);
@@ -1263,8 +1369,8 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-       String idWagon = jTextFieldIdWagonToTrain.getText();
-       String idTrain = jTextFieldIdTrain.getText();
+        String idWagon = jTextFieldIdWagonToTrain.getText();
+        String idTrain = jTextFieldIdTrain.getText();
         if (isNullOrEmpty(idWagon)
                 || isNullOrEmpty(idTrain)) {
             JOptionPane.showMessageDialog(this,
@@ -1273,27 +1379,25 @@ public class App extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-       
-       int idTrainInteger = Integer.parseInt(idTrain);
-       
-       if (DataManager.uniqueWagonId(idWagon)) {         
+
+        int idTrainInteger = Integer.parseInt(idTrain);
+
+        if (DataManager.uniqueWagonId(idWagon)) {
             JOptionPane.showMessageDialog(this,
                     "Id vozňa " + idWagon + " sa nenašlo.",
                     "Chyba",
                     JOptionPane.WARNING_MESSAGE);
             return;
-       }
-       
-       
-       
-       if (DataManager.uniqueTrainId(idTrainInteger)) {         
+        }
+
+        if (DataManager.uniqueTrainId(idTrainInteger)) {
             JOptionPane.showMessageDialog(this,
                     "Id vlaku " + idWagon + " sa nenašlo.",
                     "Chyba",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-       
+
         if (DataManager.isWagonConnectToTrain(idWagon)) {
             JOptionPane.showMessageDialog(this,
                     "Vozeň s id " + idWagon + " je už vo vlaku zapojený.",
@@ -1301,12 +1405,75 @@ public class App extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         DataManager.setWagonService(idWagon, true);
         DataManager.insertWagonToWagonManager(idWagon, idTrainInteger, new Date(), null);
         DataManager.endScannWagon(idWagon);
-        
+
+        Record record = new Record(null, new Date(), "Zaradenie vozňa s id:" + idWagon + " do vlaku s id: " + idTrainInteger + " .", User.getLogin());
+        DataManager.insertRecord(record);
+        JOptionPane.showMessageDialog(this, "Úspešné zaradnie vozňa"
+                + "\nId vlaku: " + idTrain
+                + "\nId vozňa: " + idWagon
+        );
+
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jComboBoxStationChangePositionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxStationChangePositionItemStateChanged
+        DataManager dm = new DataManager(new DBManager());
+        String stationName = String.valueOf(jComboBoxStationChangePosition.getSelectedItem());
+        
+        List<String> wagons = dm.getCurrentWagonOnStation(dm.getStationId(stationName));
+        jComboBoxIDWagonChangePosition.setModel(new DefaultComboBoxModel(wagons.toArray()));
+        
+        List<Integer> scanners = new ArrayList<>(Arrays.asList(dm.getStationScannerId(stationName)));
+        scanners.addAll(dm.getScannersOfStation(stationName));
+        jComboBoxScannerChangePosition.setModel(new DefaultComboBoxModel(scanners.toArray()));
+    }//GEN-LAST:event_jComboBoxStationChangePositionItemStateChanged
+
+    private void jComboBoxStationChangePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxStationChangePositionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationChangePositionMouseClicked
+
+    private void jComboBoxStationChangePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxStationChangePositionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxStationChangePositionActionPerformed
+
+    private void jComboBoxScannerChangePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxScannerChangePositionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxScannerChangePositionMouseClicked
+
+    private void jComboBoxScannerChangePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScannerChangePositionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxScannerChangePositionActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        String railScanner = String.valueOf(jComboBoxScannerChangePosition.getSelectedItem());
+        String idWagon = String.valueOf(jComboBoxIDWagonChangePosition.getSelectedItem());
+        
+        DataManager.endScannWagon(idWagon);
+        Scanning scanner = new Scanning(new Date(), null, Integer.parseInt(railScanner), idWagon, null, null);
+        DataManager.scannWagon(scanner);
+        
+        Record record = new Record(null, new Date(), "Presun vozňa s id:" + idWagon + " na koľaj so snimačom id: " + railScanner + " .", User.getLogin());
+        DataManager.insertRecord(record);
+        JOptionPane.showMessageDialog(this, "Úspešné presunutie vozňa"
+                + "\nId vozňa: " + idWagon
+                + "\nId snimaču: " + railScanner
+        );
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jComboBoxIDWagonChangePositionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxIDWagonChangePositionItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxIDWagonChangePositionItemStateChanged
+
+    private void jComboBoxIDWagonChangePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxIDWagonChangePositionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxIDWagonChangePositionMouseClicked
+
+    private void jComboBoxIDWagonChangePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIDWagonChangePositionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxIDWagonChangePositionActionPerformed
 
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
@@ -1321,6 +1488,7 @@ public class App extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1330,8 +1498,11 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBoxSortByFullName;
     private javax.swing.JComboBox<String> jComboBoxCompanies;
+    private javax.swing.JComboBox<String> jComboBoxIDWagonChangePosition;
     private javax.swing.JComboBox<String> jComboBoxOutOfServiceScanner;
     private javax.swing.JComboBox<String> jComboBoxScanner;
+    private javax.swing.JComboBox<String> jComboBoxScannerChangePosition;
+    private javax.swing.JComboBox<String> jComboBoxStationChangePosition;
     private javax.swing.JComboBox<String> jComboBoxStationInsertWagon;
     private javax.swing.JComboBox<String> jComboBoxStationOutOfServiceWagon;
     private javax.swing.JComboBox<String> jComboBoxUserFunction;
@@ -1356,7 +1527,10 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1369,6 +1543,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLastName;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
