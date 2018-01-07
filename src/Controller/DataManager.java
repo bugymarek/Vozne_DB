@@ -10,10 +10,12 @@ import Model.Record;
 import Model.User;
 import Model.PersonNested;
 import Model.Scanner;
+import Model.Scanning;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import service.DBManager;
@@ -89,6 +91,7 @@ public class DataManager {
                 + " FROM"
                 + " Snimanie"
                 + " WHERE id_vozna = " + id
+                + " and cas_do is null"
         );
         try {
             if (rs != null) {
@@ -106,19 +109,32 @@ public class DataManager {
         return result;
     }
 
-    public boolean setWagonOutOfService(String id) {
+    public boolean setWagonService(String id, boolean value) {
+        String set = addApostrofs("N");
+        if (value) {
+            set = addApostrofs("Y");
+        }
         id = addApostrofs(id);
         return DbManager.updateSql("Update Vozen set"
-                + " v_prevadzke = 'N'"
+                + " v_prevadzke = " + set
                 + " where id_vozna = " + id
         );
     }
-    
+
     public boolean disconnectWagonInTrain(String id) {
         id = addApostrofs(id);
         return DbManager.updateSql("Update Sprava_voznov set"
                 + " datum_do = sysdate"
-                + " where datum_do is null" 
+                + " where datum_do is null"
+                + " and id_vozna = " + id
+        );
+    }
+
+    public boolean endScannWagon(String id) {
+        id = addApostrofs(id);
+        return DbManager.updateSql("Update snimanie set"
+                + " cas_do = sysdate"
+                + " where cas_do is null"
                 + " and id_vozna = " + id
         );
     }
@@ -274,7 +290,7 @@ public class DataManager {
 
         return result;
     }
-    
+
     public int getCurrentTrainId(String wagonId) {
         int result = -1;
         String query = "SELECT"
@@ -355,6 +371,63 @@ public class DataManager {
         }
 
         return result;
+    }
+
+    public int getLastScannerIdOfTrain(int id) {
+        DBManager dm = new DBManager();
+        int result = -1;
+        String query = "select"
+                + " id_snimacu from snimanie"
+                + " where id_vlaku = " + id
+                + " and cas_do is null "
+                + " or cas_do = "
+                + " (select max(cas_do) from snimanie"
+                + " where id_vlaku = " + id + ")";
+
+        ResultSet rs = dm.querySQL(query);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    result = rs.getInt("id_snimacu");
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    public Scanner getScannerLocation(int id) {
+        DBManager dm = new DBManager();
+        Scanner s = null;
+        String query = "select"
+                + " id_snimacu,"
+                + " zem_sirka,"
+                + " zem_vyska"
+                + " from snimanie"
+                + " where id_snimacu = " + id;
+
+        ResultSet rs = dm.querySQL(query);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    s = new Scanner(rs.getInt("id_snimacu"), rs.getDouble("zem_sirka"), rs.getDouble("zem_vyska"));
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return s;
     }
 
     public String getStationName(int id) {
@@ -509,7 +582,7 @@ public class DataManager {
                 + addApostrofs(user.getLastName()) + ")";
 
         DbManager.insertSql(query);
-    }   
+    }
 
     public boolean insertWagon(InsertWagon wagon) {
         String query
@@ -518,6 +591,17 @@ public class DataManager {
                 + wagon.getType() + ","
                 + wagon.getWeight() + ","
                 + "'N')";
+
+        return DbManager.insertSql(query);
+    }
+
+    public boolean insertWagonToWagonManager(String wagonId, int trainId, Date dateFrom, Date dateTo) {
+        String query
+                = "insert into Sprava_voznov values("
+                + addApostrofs(wagonId) + ","
+                + trainId + ","
+                + "TO_DATE(" + addApostrofs(Formater.format(dateFrom)) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
+                + dateTo + ")";
 
         return DbManager.insertSql(query);
     }
@@ -533,7 +617,7 @@ public class DataManager {
         return DbManager.insertSql(query);
     }
 
-    public boolean scannWagon(InsertWagon wagon) {
+    public boolean scannInsertedWagon(InsertWagon wagon) {
         String query
                 = "insert into Snimanie values("
                 + "TO_DATE(" + addApostrofs(Formater.format(wagon.getDate())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
@@ -545,15 +629,16 @@ public class DataManager {
 
         return DbManager.insertSql(query);
     }
-    
-    public boolean scannWagonOnStation(Scanner scanner) {
+
+    public boolean scannWagon(Scanning scanner) {
+        String wagonId = (scanner.getWagonId() == null) ? null : addApostrofs(scanner.getWagonId());
         String query
                 = "insert into Snimanie values("
                 + "TO_DATE(" + addApostrofs(Formater.format(scanner.getDateFrom())) + ", 'DD.MM.YYYY HH24:MI:SS')" + ","
-                +  scanner.getLocomotiveId() + ","
+                + scanner.getLocomotiveId() + ","
                 + scanner.getScannerId() + ","
-                + addApostrofs(scanner.getWagonId()) + ","
-                + scanner.getTrainId()+ ","
+                + wagonId + ","
+                + scanner.getTrainId() + ","
                 + scanner.getDateTo() + ")";
 
         return DbManager.insertSql(query);
@@ -669,7 +754,36 @@ public class DataManager {
         return result;
     }
 
+    public boolean uniqueTrainId(int id) {
+        boolean result = false;
+
+        ResultSet rs = DbManager.querySQL("SELECT"
+                + " count(*) as count"
+                + " FROM"
+                + " Vlak"
+                + " WHERE id_vlaku = " + id
+        );
+        try {
+            if (rs != null) {
+
+                rs.next();
+                //Retrieve by column name
+                int count = rs.getInt("count");
+                if (count == 0) {
+                    result = true;
+                }
+                rs.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     private String addApostrofs(String name) {
         return "'" + name + "'";
     }
+
 }
