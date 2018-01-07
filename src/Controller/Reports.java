@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.ActualyWagonLocation;
+import Model.StatisticsAboutWagonInTrain;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
@@ -354,6 +355,53 @@ public class Reports {
                     Date dateTo = rs.getDate("datumDo");
                     WagonInTrain wagonInTrain = new WagonInTrain(idWagon, idTrainDb, trainName, trainTypeDb, dateFrom, dateTo, spolocnostNazov, wagonTypeDb);
                     result.add(wagonInTrain);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    public List<StatisticsAboutWagonInTrain> getStatisticsAboutWagonInTrain(int idTrain,Date dateFrom, Date dateTo) {
+        String dateStringFrom = Formater.format(dateFrom);
+        String dateStringTo = Formater.format(dateTo);
+       
+        
+       String wagonsOutService = ("SELECT"
+                + " tv.nazov as nazov,"
+                + " count(sv.id_vozna) as pocet_voznov,"
+                + " round((count(sv.id_vozna)/"
+                + " (select count(*) from Sprava_voznov"
+                + " where id_vlaku like "+idTrain
+                + " and Sprava_voznov.datum_od <= to_date('" +dateStringFrom+"','DD.MM.YYYY HH24:MI:SS')"
+                + " and ( Sprava_voznov.datum_do > to_date('" +dateStringTo+ "','DD.MM.YYYY HH24:MI:SS')"
+                + " or Sprava_voznov.datum_do is null)))*100,2) as Percentualne_vyjadrenie"
+                + " from Typ_vozna tv"
+                + " join Vozen v on(tv.id_typu = v.id_typu)"
+                + " join Sprava_voznov sv on(sv.id_vozna=v.id_vozna)"
+                + " where id_vlaku like "+idTrain
+                + " and sv.datum_od <= to_date('" + dateStringFrom +"','DD.MM.YYYY HH24:MI:SS')"
+                + " and ( sv.datum_do > to_date('" + dateStringTo + "','DD.MM.YYYY HH24:MI:SS')"
+                + " or sv.datum_do is null)"
+               + " group by tv.nazov,tv.id_typu"
+            );
+         List<StatisticsAboutWagonInTrain> result = new ArrayList<>();
+         DBManager db = new DBManager();
+         ResultSet rs = db.querySQL(wagonsOutService);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    String NameOfTypewagon = rs.getString("nazov");
+                    int pocet = rs.getInt("pocet_voznov");
+                    Double perce = rs.getDouble("Percentualne_vyjadrenie");
+                    StatisticsAboutWagonInTrain stat = new StatisticsAboutWagonInTrain(NameOfTypewagon, pocet, perce);
+                    result.add(stat);
                 }
                 rs.close();
 
