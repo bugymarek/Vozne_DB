@@ -19,7 +19,7 @@ public class Scanning {
     private Date dateTo;
     private String TrainId;
 
-    public Scanning(Date dateFrom, String LocomotiveId, int ScannerId, String WagonId, Date dateTo, String TrainId) {
+        public Scanning(Date dateFrom, String LocomotiveId, int ScannerId, String WagonId, Date dateTo, String TrainId) {
         this.dateFrom = dateFrom;
         this.LocomotiveId = LocomotiveId;
         this.ScannerId = ScannerId;

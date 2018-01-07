@@ -11,8 +11,10 @@ import Model.User;
 import Model.PersonNested;
 import Model.Scanner;
 import Model.Scanning;
+import Model.WagonInTrain;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -215,6 +217,42 @@ public class DataManager {
         return result;
     }
 
+    public ArrayList<WagonInTrain> getLastScannedWagonsInTrains(String contition) {
+        ArrayList<WagonInTrain> result = new ArrayList<>();
+        String query = "select"
+                + " sn.id_vlaku as idVlaku,"
+                + " sv.id_vozna as idVozna,"
+                + " max(sn.cas_od) as casOd"
+                + " from Vozen v"
+                + " join Sprava_voznov sv on (v.id_vozna = sv.id_vozna)"
+                + " join Vlak vk on (vk.id_vlaku = sv.id_vlaku)"
+                + " join Snimanie sn on(sn.id_vlaku = vk.ID_VLAKU)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " join Stanica using(id_stanice)"
+                + " where sv.datum_do is null" + contition
+                + " group by sn.id_vlaku, sv.id_vozna";
+        ResultSet rs = DbManager.querySQL(query);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    int idTrain = rs.getInt("idVlaku");
+                    String idWagon = rs.getString("idVozna");
+                    Timestamp dateFrom = rs.getTimestamp("casOd");
+                    WagonInTrain wagonInTrain = new WagonInTrain(idWagon, "" + idTrain, null, null, new Date(dateFrom.getTime()), null, null, null);
+                    result.add(wagonInTrain);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public ArrayList<String> getFunctionNames() {
         ArrayList<String> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL("SELECT"
@@ -401,7 +439,7 @@ public class DataManager {
 
         return result;
     }
-    
+
     public Scanner getScannerLocation(int id) {
         DBManager dm = new DBManager();
         Scanner s = null;
@@ -418,6 +456,38 @@ public class DataManager {
                 while (rs.next()) {
                     //Retrieve by column name
                     s = new Scanner(rs.getInt("id_snimacu"), rs.getDouble("zem_sirka"), rs.getDouble("zem_vyska"));
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return s;
+    }
+
+    public Scanning getScanning(Date dateFrom, int idTrain) {
+        DBManager dm = new DBManager();
+        Scanning s = null;
+        String query = "select"
+                + " cas_od,"
+                + " id_rusna,"
+                + " id_snimacu,"
+                + " id_vozna,"
+                + " cas_do,"
+                + " id_vlaku"
+                + " from snimanie"
+                + " where TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS') = " + addApostrofs(Formater.format(dateFrom))
+                + " and id_vlaku = " + idTrain;
+
+        ResultSet rs = dm.querySQL(query);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    s = new Scanning(rs.getDate("cas_od"), "" + rs.getInt("id_rusna"), rs.getInt("id_snimacu"), rs.getString("id_vozna"), rs.getDate("cas_do"), "" + rs.getInt("id_vlaku"));
                 }
                 rs.close();
 

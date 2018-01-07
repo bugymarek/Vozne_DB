@@ -11,6 +11,7 @@ import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
+import Model.Scanning;
 import Model.WagonOnStation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -284,7 +285,18 @@ public class Reports {
                 + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
                 + wagonType + inService + company + idStation;
 
+        List<ActualyWagonLocation> result = new ArrayList<>();
+        
         // TODO: dorob vozne ktore mali cas_do != null to znamena ze posledne snimanie voznov zapojenych vo vlaku 
+        
+//        DataManager dm = new DataManager(DbManager);
+//        ArrayList<WagonInTrain> wagons = dm.getLastScannedWagonsInTrains(idStation);
+//        for (WagonInTrain wagon : wagons) { 
+//            Scanning scanning = dm.getScanning(wagon.getDateFrom(), Integer.parseInt(wagon.getIdTrain()));
+//            
+//            ActualyWagonLocation actualyWagonLocation = new ActualyWagonLocation(wagon.getIdWagon(), 0, 0, wagon.getDateFrom(), scanning.getDateTo(), wagonType, null, inService, company);
+//            result.add(actualyWagonLocation);
+//        }
         String wagonsLastScaned = "select distinct"
                 + " Vozen.id_vozna as vozenVlaku,"
                 + "                ZEM_DLZKA,"
@@ -310,7 +322,7 @@ public class Reports {
                 + "                 join Sprava_Voznov using(id_vlaku))"
                 + wagonType + inService + company + idStation;
         
-        List<ActualyWagonLocation> result = new ArrayList<>();
+        
         DBManager db = new DBManager();
         ResultSet rs = db.querySQL(wagonsOutServiceOnRail + " UNION " + wagonsOutServiceOnstation + " UNION " + wagonsInServiceOnStationRail + " UNION " + wagonsInServiceOnStation);
 
