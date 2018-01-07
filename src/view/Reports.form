@@ -75,27 +75,22 @@
                                   <Component id="jComboBoxStationName1" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="204" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="jComboBoxWagonType1" min="-2" pref="236" max="-2" attributes="0"/>
+                                      <Component id="jComboBoxWagonType1" min="-2" pref="404" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jComboBoxInService1" min="-2" pref="59" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jComboBoxCopanyName1" min="-2" pref="369" max="-2" attributes="0"/>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jSpinnerDate1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxCopanyName1" min="-2" pref="369" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -111,7 +106,6 @@
                           <Component id="jComboBoxStationName1" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -120,7 +114,6 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jComboBoxCopanyName1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jSpinnerDate1" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboBoxInService1" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboBoxWagonType1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -236,18 +229,6 @@
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Stanica"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JSpinner" name="jSpinnerDate1">
-              <Properties>
-                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="now" stepSize="5" type="date"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel16">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="D&#xe1;tum zosn&#xed;mania"/>
               </Properties>
             </Component>
           </SubComponents>

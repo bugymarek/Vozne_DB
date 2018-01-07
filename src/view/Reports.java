@@ -67,8 +67,6 @@ public class Reports extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jComboBoxStationName1 = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jSpinnerDate1 = new javax.swing.JSpinner();
-        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -213,10 +211,6 @@ public class Reports extends javax.swing.JDialog {
 
         jLabel15.setText("Stanica");
 
-        jSpinnerDate1.setModel(new javax.swing.SpinnerDateModel());
-
-        jLabel16.setText("Dátum zosnímania");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -233,23 +227,19 @@ public class Reports extends javax.swing.JDialog {
                                 .addGap(0, 267, Short.MAX_VALUE))
                             .addComponent(jComboBoxStationName1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addGap(204, 204, 204)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel11))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16))))
+                            .addComponent(jLabel12)
+                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -260,7 +250,6 @@ public class Reports extends javax.swing.JDialog {
                     .addComponent(jComboBoxStationName1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
                             .addComponent(jLabel12)
                             .addComponent(jLabel11)
                             .addComponent(jLabel9)
@@ -268,7 +257,6 @@ public class Reports extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
@@ -1000,9 +988,8 @@ public class Reports extends javax.swing.JDialog {
                 String wagonType = String.valueOf(jComboBoxWagonType1.getSelectedItem());
                 String company = String.valueOf(jComboBoxCopanyName1.getSelectedItem());
                 String inService = String.valueOf(jComboBoxInService1.getSelectedItem());
-                SpinnerDateModel modelDate = (SpinnerDateModel) jSpinnerDate1.getModel();
 
-                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, modelDate.getDate(), company);
+                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, company);
                 Object[][] o = new Object[wagons.size()][9];
                 for (ActualyWagonLocation wagon : wagons) {
                     o[i][0] = wagon.getStationName();
@@ -1342,7 +1329,6 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1382,7 +1368,6 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinDatumDoTrainInfo;
     private javax.swing.JSpinner jSpinDatumODStatTrain;
     private javax.swing.JSpinner jSpinnerDate;
-    private javax.swing.JSpinner jSpinnerDate1;
     private javax.swing.JSpinner jSpinnerDateFr;
     private javax.swing.JSpinner jSpinnerDateFrom;
     private javax.swing.JSpinner jSpinnerDateTo;

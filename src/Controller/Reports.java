@@ -64,7 +64,7 @@ public class Reports {
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
 
-        String wagonsOurServiceOnstation = "SELECT"
+        String wagonsOutServiceOnstation = "SELECT"
                 + "                  id_vozna,"
                 + "                  Spolocnost.nazov as spolocnostNazov,"
                 + "                  Typ_vozna.nazov as typ_vozna_nazov,"
@@ -118,7 +118,7 @@ public class Reports {
 
         List<WagonOnStation> result = new ArrayList<>();
 
-        String[] selects = {wagonsOutServiceOnTrail, wagonsOurServiceOnstation, wagonsInServiceOnTrail, wagonsInServiceOnStation};
+        String[] selects = {wagonsOutServiceOnTrail, wagonsOutServiceOnstation, wagonsInServiceOnTrail, wagonsInServiceOnStation};
 
         for (int i = 0; i < selects.length; i++) {
             ResultSet rs = DbManager.querySQL(selects[i]);
@@ -157,8 +157,8 @@ public class Reports {
                 + " join Snimanie using(id_snimacu)"
                 + " full join Vlak on(Vlak.id_vlaku = Snimanie.id_vlaku)"
                 + " left join sprava_voznov on(Vlak.id_vlaku = sprava_voznov.id_vlaku)"
-                + " where sprava_voznov.id_vozna = "+ addApostrofs(IdWagon) +" or snimanie.id_vozna = "+ addApostrofs(IdWagon) +")";
-        
+                + " where sprava_voznov.id_vozna = " + addApostrofs(IdWagon) + " or snimanie.id_vozna = " + addApostrofs(IdWagon) + ")";
+
         List<ActualyWagonLocation> result = new ArrayList<>();
         ResultSet rs = DbManager.querySQL(query);
         try {
@@ -180,8 +180,7 @@ public class Reports {
         return result;
     }
 
-    public List<ActualyWagonLocation> getCurrentWagonsLocation(String idStation, String wagonType, String inService, Date date, String company) {
-        String dateString = addApostrofs(Formater.format(date));
+    public List<ActualyWagonLocation> getCurrentWagonsLocation(String idStation, String wagonType, String inService, String company) {
 
         if (!isNullOrEmpty(wagonType)) {
             wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
@@ -196,7 +195,7 @@ public class Reports {
             idStation = " AND id_stanice like " + Integer.parseInt(idStation);
         }
 
-        String wagonsOutService = "select distinct "
+        String wagonsOutServiceOnRail = "select distinct "
                 + "id_vozna as vozenVlaku,"
                 + " ZEM_DLZKA,"
                 + " ZEM_SIRKA,"
@@ -215,10 +214,30 @@ public class Reports {
                 + " join Stanica using(id_stanice)"
                 + " where cas_do is null"
                 + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
-                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date('05.01.1990 16:29:39','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company + idStation;
 
-        String wagonsInService = "select distinct"
+        String wagonsOutServiceOnstation = "SELECT distinct "
+                + " id_vozna as vozenVlaku,"
+                + " ZEM_DLZKA,"
+                + " ZEM_SIRKA,"
+                + " cas_od,"
+                + " cas_do,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnos_nazov,"
+                + " Stanica.nazov as stanica_nazov,"
+                + " v_prevadzke"
+                + "                  FROM Typ_vozna"
+                + "                  join Vozen using(id_typu)"
+                + "                  join Vozen_spolocnost using(id_vozna)"
+                + "                  join Spolocnost using(id_spolocnosti)"
+                + "                  join Snimanie using(id_vozna)"
+                + "                  join Snimac using(id_snimacu)"
+                + "                  join Stanica using(id_snimacu)"
+                + " where cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
+                + wagonType + inService + company + idStation;
+
+        String wagonsInServiceOnStationRail = "select distinct"
                 + " Vozen.id_vozna as vozenVlaku,"
                 + " ZEM_DLZKA,"
                 + " ZEM_SIRKA,"
@@ -240,10 +259,32 @@ public class Reports {
                 + " join Stanica using(id_stanice)"
                 + " where cas_do is null"
                 + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
-                + " and TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
-                + " and cas_do is not null"
+                + wagonType + inService + company + idStation;
+        
+        String wagonsInServiceOnStation = "select distinct"
+                + " Vozen.id_vozna as vozenVlaku,"
+                + " ZEM_DLZKA,"
+                + " ZEM_SIRKA,"
+                + " cas_od,"
+                + " cas_do,"
+                + " Typ_vozna.nazov as typ_vozna_nazov,"
+                + " Spolocnost.nazov as spolocnos_nazov,"
+                + " Stanica.nazov as stanica_nazov,"
+                + " v_prevadzke"
+                + " from Spolocnost"
+                + " join Vozen_spolocnost using(id_spolocnosti)"
+                + " join Vozen on(Vozen_spolocnost.id_vozna = Vozen.id_vozna )"
+                + " join TYP_VOZNA using(id_typu)"
+                + " join Sprava_voznov on(Sprava_voznov.id_vozna = Vozen.id_vozna )"
+                + " join Vlak using(id_vlaku)"
+                + " join Snimanie using(id_vlaku)"
+                + " join Snimac using(id_snimacu)"
+                + " join Stanica using(id_snimacu)"
+                + " where cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
                 + wagonType + inService + company + idStation;
 
+        // TODO: dorob vozne ktore mali cas_do != null to znamena ze posledne snimanie voznov zapojenych vo vlaku 
         String wagonsLastScaned = "select distinct"
                 + " Vozen.id_vozna as vozenVlaku,"
                 + "                ZEM_DLZKA,"
@@ -264,14 +305,14 @@ public class Reports {
                 + " join Typ_vozna using(id_typu)"
                 + " join Vozen_spolocnost vsp on(vsp.id_vozna= Vozen.id_vozna)"
                 + " join Spolocnost using(id_spolocnosti)"
-                + " where TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
-                + " and sn.cas_do = (select max(snim.cas_do) from Snimanie snim"
+                + " where sn.cas_od = (select max(snim.cas_od) from Snimanie snim"
                 + "                 join Vlak using(id_vlaku)"
-                + "                 join Sprava_Voznov using(id_vlaku)"
-                + "                 where TO_DATE (TO_CHAR (snim.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS'))";
+                + "                 join Sprava_Voznov using(id_vlaku))"
+                + wagonType + inService + company + idStation;
+        
         List<ActualyWagonLocation> result = new ArrayList<>();
         DBManager db = new DBManager();
-        ResultSet rs = db.querySQL(wagonsOutService + " UNION " + wagonsInService + " UNION " + wagonsLastScaned);
+        ResultSet rs = db.querySQL(wagonsOutServiceOnRail + " UNION " + wagonsOutServiceOnstation + " UNION " + wagonsInServiceOnStationRail + " UNION " + wagonsInServiceOnStation);
 
         try {
             if (rs != null) {
