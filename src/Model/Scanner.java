@@ -5,52 +5,31 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author Bugy
  */
 public class Scanner {
-    private Date dateFrom;
-    private String LocomotiveId;
     private int ScannerId;
-    private String WagonId;
-    private Date dateTo;
-    private String TrainId;
+    private double Latitude;
+    private double Longitude;
 
-    public Scanner(Date dateFrom, String LocomotiveId, int ScannerId, String WagonId, Date dateTo, String TrainId) {
-        this.dateFrom = dateFrom;
-        this.LocomotiveId = LocomotiveId;
+    public Scanner(int ScannerId, double Latitude, double Longitude) {
         this.ScannerId = ScannerId;
-        this.WagonId = WagonId;
-        this.dateTo = dateTo;
-        this.TrainId = TrainId;
-    }
-
-    public Date getDateFrom() {
-        return dateFrom;
-    }
-
-    public String getLocomotiveId() {
-        return LocomotiveId;
+        this.Latitude = Latitude;
+        this.Longitude = Longitude;
     }
 
     public int getScannerId() {
         return ScannerId;
     }
 
-    public String getWagonId() {
-        return WagonId;
+    public double getLatitude() {
+        return Latitude;
     }
 
-    public Date getDateTo() {
-        return dateTo;
+    public double getLongitude() {
+        return Longitude;
     }
-
-    public String getTrainId() {
-        return TrainId;
-    }
-    
     
 }
