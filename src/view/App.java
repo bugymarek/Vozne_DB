@@ -150,9 +150,10 @@ public class App extends javax.swing.JFrame {
         jTextFieldCountrzShortCut = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        jCheckBoxSortByFullName = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePersonList = new javax.swing.JTable();
+        jLabel34 = new javax.swing.JLabel();
+        jComboBoxSort = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -428,8 +429,6 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        jCheckBoxSortByFullName.setText("Sortuj podľa mena a priezviska");
-
         jTablePersonList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -440,6 +439,14 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTablePersonList);
 
+        jLabel34.setText("Sortuj podľa");
+
+        jComboBoxSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSortActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -447,23 +454,27 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCheckBoxSortByFullName)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxSort, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(jComboBoxSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBoxSortByFullName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Zoznam osôb", jPanel1);
@@ -1217,22 +1228,23 @@ public class App extends javax.swing.JFrame {
         jComboBoxScannerChangePosition.setModel(new DefaultComboBoxModel(scanners.toArray()));
         List<String> wagons = dm.getCurrentWagonOnStation(dm.getStationId(stationName));
         jComboBoxIDWagonChangePosition.setModel(new DefaultComboBoxModel(wagons.toArray()));
-       
-        
+
         List<String> companies = dm.getCompanyNames();
         jComboBoxCompanies.setModel(new DefaultComboBoxModel(companies.toArray()));
-        
+
         List<String> companiesFindSection = new ArrayList<>(Arrays.asList(""));
         companiesFindSection.addAll(companies);
         jComboBoxCopanyNameFind.setModel(new DefaultComboBoxModel(companiesFindSection.toArray()));
 
         List<String> wagonTypes = dm.getWagonTypes();
         jComboBoxWagonTypeInser.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
-        
+
         List<String> wagonTypesFindSection = new ArrayList<>(Arrays.asList(""));
         wagonTypesFindSection.addAll(wagonTypes);
         jComboBoxWagonTypeFind.setModel(new DefaultComboBoxModel(wagonTypesFindSection.toArray()));
 
+        List<String> sortNames = new ArrayList<>(Arrays.asList("","Mena a priezviska", "Ulice"));
+        jComboBoxSort.setModel(new DefaultComboBoxModel(sortNames.toArray()));
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -1242,9 +1254,23 @@ public class App extends javax.swing.JFrame {
             public void run() {
                 int i = 0;
 
-                boolean check = jCheckBoxSortByFullName.isSelected();
+                List<PersonNested> persons = new ArrayList<>();
+                String sortName = String.valueOf(jComboBoxSort.getSelectedItem());
 
-                List<PersonNested> persons = AppController.getPersons(check);
+                switch (sortName) {
+                    case "":
+                        persons = AppController.getPersons();
+                        break;
+                    case "Mena a priezviska":
+                        persons = AppController.getPersonsSortedByFullName();
+                        break;
+                    case "Ulice":
+                        persons = AppController.getPersonsSortedByStreat();
+                        break;
+ 
+                } 
+                    
+
                 Object[][] o = new Object[persons.size()][7];
                 for (PersonNested person : persons) {
                     o[i][0] = person.getName();
@@ -1597,7 +1623,7 @@ public class App extends javax.swing.JFrame {
                 }
 
                 Object[][] o = new Object[wagons.size()][5];
-                
+
                 for (WagonOnStation wagon : wagons) {
                     o[i][0] = wagon.getIdStation();
                     o[i][1] = wagon.getIdWagon();
@@ -1605,8 +1631,8 @@ public class App extends javax.swing.JFrame {
                     o[i][3] = wagon.getCompany();
                     o[i][4] = wagon.getIdScanner();
                     i++;
-                }         
-                
+                }
+
                 DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Stanica", "Id vozňa", "Typ vozňa", "Spoločnosť", "Id snimaču koľaje"});
                 jTableWagons.setModel(d);
                 jButton6.setText("Refresh");
@@ -1642,6 +1668,10 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCopanyNameFindActionPerformed
 
+    private void jComboBoxSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSortActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxSortActionPerformed
+
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -1664,13 +1694,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JCheckBox jCheckBoxSortByFullName;
     private javax.swing.JComboBox<String> jComboBoxCompanies;
     private javax.swing.JComboBox<String> jComboBoxCopanyNameFind;
     private javax.swing.JComboBox<String> jComboBoxIDWagonChangePosition;
     private javax.swing.JComboBox<String> jComboBoxOutOfServiceScanner;
     private javax.swing.JComboBox<String> jComboBoxScanner;
     private javax.swing.JComboBox<String> jComboBoxScannerChangePosition;
+    private javax.swing.JComboBox<String> jComboBoxSort;
     private javax.swing.JComboBox<String> jComboBoxStationChangePosition;
     private javax.swing.JComboBox<String> jComboBoxStationInsertWagon;
     private javax.swing.JComboBox<String> jComboBoxStationNameFind;
@@ -1705,6 +1735,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
