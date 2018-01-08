@@ -100,4 +100,6 @@ public class DBManager {
         }
         return result;
     }
+
+   
 }//end JDBCExample

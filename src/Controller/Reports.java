@@ -7,11 +7,14 @@ package Controller;
 
 import Model.ActualyWagonLocation;
 import Model.StatisticsAboutWagonInTrain;
+import Model.StatisticsAboutWagonInTrain;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
 import Model.Scanning;
+import Model.StatissAbooutWagonOnStation;
+import Model.UserModication;
 import Model.WagonOnStation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -570,6 +573,142 @@ public class Reports {
                     Date timeTo = rs.getDate("cas_do");
                     HistoricalWagonLocation historyLocation = new HistoricalWagonLocation(nazov, longitud, latitud, timeFrom, timeTo);
                     result.add(historyLocation);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    public List<StatissAbooutWagonOnStation> getCountWagonOnStation(Date dateFrom, Date datesTo) {
+        String datFrom = Formater.format(dateFrom);
+        String datTO = Formater.format(datesTo);
+
+        String wagonsOutServiceOnStation = "SELECT"
+                + " st.nazov as nazov_stanice,"
+                + " count(v.id_vozna)as pocetVoznov"
+                + " from Stanica st"
+                + " join Snimac sc on(sc.id_snimacu = st.id_snimacu)"
+                + " join Snimanie sn on(sc.id_snimacu = sn.id_snimacu)"
+                + " join Vozen v on(sn.id_vozna = v.id_vozna)"
+                + " where sn.CAS_OD <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
+                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " or sn.CAS_DO is null)"
+                + " group by st.nazov";
+
+        String wagonsOutServiceOnStationPart = "SELECT"
+                + " Stanica.nazov as nazov_stanice,"
+                + " count(v.id_vozna)as pocetVoznov"
+                + " from Stanica"
+                + " join kolajovy_usek using(id_stanice)"
+                + " join Snimac sc on(sc.id_snimacu = kolajovy_usek.id_snimacu)"
+                + " join Snimanie sn on(sc.id_snimacu = sn.id_snimacu)" 
+                + " join Vozen v on(sn.id_vozna = v.id_vozna)"
+                + " where sn.CAS_OD <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
+                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " or sn.CAS_DO is null)"
+                + " and kolajovy_usek.id_snimacu not in("
+                + " select id_snimacu"
+                + " from Kolajovy_usek"
+                + " group by id_snimacu"
+                + " having count(id_snimacu) > 1)"
+                + "group by Stanica.nazov";
+                
+        String wagonsInServiceOnTrailInStaion = "SELECT"
+                + " st.nazov as nazov_stanice,"
+                + " count(sv.id_vozna)as pocetVoznov"
+                + " from Stanica st"
+                + " join Snimac sc on(sc.id_snimacu = st.id_snimacu)"
+                + " join Snimanie sn on(sc.id_snimacu = sn.id_snimacu)"
+                + " join Vlak v on(v.ID_VLAKU = sn.ID_VLAKU)"
+                + " join Sprava_voznov sv on(v.ID_VLAKU = sv.id_vlaku)"
+                + " where sn.CAS_OD <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
+                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " or sn.CAS_DO is null)"
+                + " group by st.nazov";
+
+        String wagonsInServiceOnTRainONStationPart = "SELECT"
+                + " st.nazov as nazov_stanice,"
+                + " count(sv.id_vozna)as pocetVoznov"
+                + " from Stanica st"
+                + " join kolajovy_usek using(id_stanice)"
+                + " join Snimac sc on(sc.id_snimacu = kolajovy_usek.id_snimacu)"
+                + " join Snimanie sn on(sc.id_snimacu = sn.id_snimacu)" 
+                + " join Vlak v on(v.ID_VLAKU = sn.ID_VLAKU)"
+                + " join Sprava_voznov sv on(v.ID_VLAKU = sv.id_vlaku)"
+                + " where sn.CAS_OD <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
+                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " or sn.CAS_DO is null)"
+                + " and kolajovy_usek.id_snimacu not in("
+                + " select id_snimacu"
+                + " from Kolajovy_usek"
+                + " group by id_snimacu"
+                + " having count(id_snimacu) > 1)"
+                + " group by st.nazov";
+
+        List<StatissAbooutWagonOnStation> result = new ArrayList<>();
+        ResultSet rs = DbManager.querySQL(wagonsOutServiceOnStation + " UNION " + wagonsOutServiceOnStationPart 
+                + " UNION " + wagonsInServiceOnTrailInStaion + " UNION " + wagonsInServiceOnTRainONStationPart + " order by pocetVoznov desc");
+
+        
+            try {
+                if (rs != null) {
+                    while (rs.next()) {
+                        String nameOfStation = rs.getString("nazov_stanice");
+                        int count = rs.getInt("pocetVoznov");
+                        StatissAbooutWagonOnStation statisOnStation = new StatissAbooutWagonOnStation(nameOfStation, count);
+                        result.add(statisOnStation);
+                    }
+                    rs.close();
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        
+
+        return result;
+    }
+    
+    public List<UserModication> getStatisticAboutUSerModify(String function , Date dateFrom) {
+        String dateStringFrom = Formater.format(dateFrom);
+         if (!isNullOrEmpty(function)) {
+            function = " AND Funkcia.popis like " + addApostrofs(function);
+        }
+
+        String wagonsOutService = ("SELECT"
+                + " meno||' '||priezvisko as meno,"
+                + " Funkcia.popis as funkcia,"
+                + " count(*) as pocet,"
+                + " round((count(*)/ (select count(*)"
+                + " from Zaznamy"
+                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
+                + " from Osoba "
+                + " join Uzivatel using(rod_cislo)"
+                + " join Zaznamy using(login)"
+                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
+                + " group by meno||' '||priezvisko,login,Funkcia.popis"
+                + " order by pocet desc "
+                + function );
+               
+        List<UserModication> result = new ArrayList<>();
+        DBManager db = new DBManager();
+        ResultSet rs = db.querySQL(wagonsOutService);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    String NameOfPerson = rs.getString("meno");
+                    String function1 = rs.getString("funkcia");
+                    int pocet = rs.getInt("pocet");
+                    Double perce = rs.getDouble("Percentualne_vyjadrenie");
+                    UserModication user = new UserModication(NameOfPerson , function1, pocet, perce);
+                    result.add(user);
                 }
                 rs.close();
 
