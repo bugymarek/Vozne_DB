@@ -687,11 +687,11 @@ public class Reports {
                 + " count(*) as pocet,"
                 + " round((count(*)/ (select count(*)"
                 + " from Zaznamy"
-                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
+                + " where to_date(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY') > to_date('" +dateStringFrom+ "','DD.MM.YYYY')))*100,2) as Percentualne_vyjadrenie"
                 + " from Osoba "
                 + " join Uzivatel using(rod_cislo)"
                 + " join Zaznamy using(login)"
-                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
+                + " where to_date(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY') > to_date('" +dateStringFrom+ "','DD.MM.YYYY')"
                 + " group by meno||' '||priezvisko,login,Funkcia.popis"
                 + " order by pocet desc "
                 + function );
