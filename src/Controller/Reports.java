@@ -690,11 +690,12 @@ public class Reports {
                 + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
                 + " from Osoba "
                 + " join Uzivatel using(rod_cislo)"
+                + "join Funkcia using(id_funkcie)"
                 + " join Zaznamy using(login)"
                 + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
+                + function
                 + " group by meno||' '||priezvisko,login,Funkcia.popis"
-                + " order by pocet desc "
-                + function );
+                + " order by pocet desc ");
                
         List<UserModication> result = new ArrayList<>();
         DBManager db = new DBManager();

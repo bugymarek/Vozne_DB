@@ -421,7 +421,7 @@ public class App extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Registrácia uživateľa", jPanel2);
 
-        jButton4.setText("Refresh");
+        jButton4.setText("Vyhľadaj");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -673,7 +673,7 @@ public class App extends javax.swing.JFrame {
 
         jLabel30.setText("Id snímač *");
 
-        jButton10.setText("Vyraď");
+        jButton10.setText("Zmeň");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -916,7 +916,7 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTableWagons);
 
-        jButton6.setText("Refresh");
+        jButton6.setText("Vyhľadaj");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
