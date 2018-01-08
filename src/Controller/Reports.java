@@ -368,7 +368,7 @@ public class Reports {
             company = " AND Spolocnost.nazov like " + addApostrofs(company);
         }
         List<WagonInTrain> result = new ArrayList<>();
-        ResultSet rs = DbManager.querySQL("SELECT"
+        String wagonInTrainSel = ("SELECT "
                 + " id_vlaku,"
                 + " Vlak.nazov as vlak_nazov,"
                 + " id_vozna,"
@@ -387,8 +387,13 @@ public class Reports {
                 + " where id_vlaku like " + idTrain
                 + " and Sprava_voznov.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
                 + " and (Sprava_voznov.datum_do >= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS') or Sprava_voznov.datum_do is null)"
-                + wagonType + trainType + company
+                + " and Vozen_spolocnost.datum_od <= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS')"
+                + " and (Vozen_spolocnost.datum_do >= to_date(" + dateString + ",'DD.MM.YYYY HH24:MI:SS') or Vozen_spolocnost.datum_do is null)"
+                +  wagonType + trainType + company
         );
+        
+        DBManager db = new DBManager();
+        ResultSet rs = db.querySQL(wagonInTrainSel);
 
         try {
             if (rs != null) {
