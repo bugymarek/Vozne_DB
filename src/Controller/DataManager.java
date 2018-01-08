@@ -501,8 +501,8 @@ public class DataManager {
 
         return s;
     }
-    
-     public List<String> getCurrentWagonOnStation(int idStation) {
+
+    public List<String> getCurrentWagonOnStation(int idStation) {
 
         String wagonsOutServiceOnTrail = "SELECT"
                 + " id_vozna"
@@ -514,7 +514,8 @@ public class DataManager {
                 + " join Snimac using(id_snimacu)"
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " where id_stanice like " + idStation
-                + " AND cas_do is null";
+                + " AND cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)";
 
         String wagonsOutServiceOnstation = "SELECT"
                 + "                  id_vozna"
@@ -526,7 +527,8 @@ public class DataManager {
                 + "                  join Snimac using(id_snimacu)"
                 + "                  join Stanica using(id_snimacu)"
                 + " where id_stanice like " + idStation
-                + " AND cas_do is null";
+                + " AND cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)";
 
         List<String> result = new ArrayList<>();
 
@@ -539,6 +541,60 @@ public class DataManager {
                     while (rs.next()) {
                         String idWagon = rs.getString("id_vozna");
                         result.add(idWagon);
+                    }
+                    rs.close();
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    public List<WagonOnStation> getWagonsOnStation(int idStation, String type, String company) {
+        if (!isNullOrEmpty(type)) {
+            type = " AND Typ_vozna.nazov like " + addApostrofs(type);
+        }
+        if (!isNullOrEmpty(company)) {
+            company = " AND Spolocnost.nazov like " + addApostrofs(company);
+        }
+
+        String wagonsOutServiceOnstation = "SELECT"
+                + " Stanica.nazov as stanica_nazov,"
+                + " id_vozna,"
+                + " Spolocnost.nazov as spolocnost_nazov,"
+                + " Typ_vozna.nazov as typ_vozna,"
+                + " id_snimacu"
+                + "                  FROM Typ_vozna"
+                + "                  join Vozen using(id_typu)"
+                + "                  join Vozen_spolocnost using(id_vozna)"
+                + "                  join Spolocnost using(id_spolocnosti)"
+                + "                  join Snimanie using(id_vozna)"
+                + "                  join Snimac using(id_snimacu)"
+                + "                  join Stanica using(id_snimacu)"
+                + " where id_stanice like " + idStation + type + company
+                + " AND cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)";
+
+        List<WagonOnStation> result = new ArrayList<>();
+
+        String[] selects = {wagonsOutServiceOnstation};
+
+        for (int i = 0; i < selects.length; i++) {
+            ResultSet rs = DbManager.querySQL(selects[i]);
+            try {
+                if (rs != null) {
+                    while (rs.next()) {
+                        String idWagon = rs.getString("id_vozna");
+                        String typeDB = rs.getString("typ_vozna");
+                        String companyDB = rs.getString("spolocnost_nazov");
+                        String stationDb = rs.getString("stanica_nazov");
+                        int idScanner = rs.getInt("id_snimacu");
+                        WagonOnStation wagonOnStation = new WagonOnStation(idWagon, typeDB, companyDB, idScanner, stationDb);
+                        result.add(wagonOnStation);
                     }
                     rs.close();
 
@@ -906,6 +962,76 @@ public class DataManager {
 
     private String addApostrofs(String name) {
         return "'" + name + "'";
+    }
+
+    public boolean isNullOrEmpty(String term) {
+        return term == null || term.equals("") || term.equals("null");
+    }
+
+    public List<WagonOnStation> getNearestWagonsOnRalsStation(int stationId, String wagonType, String company) {
+        if (!isNullOrEmpty(wagonType)) {
+            wagonType = " AND Typ_vozna.nazov like " + addApostrofs(wagonType);
+        }
+        if (!isNullOrEmpty(company)) {
+            company = " AND Spolocnost.nazov like " + addApostrofs(company);
+        }
+
+        String wagonsOutServiceOnstation = "SELECT"
+                + " Stanica.nazov as stanica_nazov,"
+                + " id_vozna,"
+                + " Spolocnost.nazov as spolocnost_nazov,"
+                + " Typ_vozna.nazov as typ_vozna,"
+                + " Kolajovy_usek.id_snimacu as ku_id_snimacu"
+                + " FROM Typ_vozna"
+                + " join Vozen using(id_typu)"
+                + " join Vozen_spolocnost using(id_vozna)"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Snimanie using(id_vozna)"
+                + " join Snimac on(Snimac.id_snimacu = Snimanie.id_snimacu)"
+                + " join Kolajovy_usek on(Kolajovy_usek.id_snimacu = Snimac.id_snimacu)"
+                + " join Stanica using(id_stanice)"
+                + " where id_stanice = " + stationId + wagonType + company + " AND cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
+                + " and dlzka = ("
+                + " SELECT min(dlzka)"
+                + " FROM Typ_vozna"
+                + " join Vozen using(id_typu)"
+                + " join Vozen_spolocnost using(id_vozna)"
+                + " join Spolocnost using(id_spolocnosti)"
+                + " join Snimanie using(id_vozna)"
+                + " join Snimac using(id_snimacu)"
+                + " join Kolajovy_usek using(id_snimacu)"
+                + " where id_stanice = " + stationId + wagonType + company + " AND cas_do is null"
+                + " and (Vozen_spolocnost.DATUM_DO is null or Vozen_spolocnost.DATUM_DO >= sysdate)"
+                + ")";
+
+        List<WagonOnStation> result = new ArrayList<>();
+
+        String[] selects = {wagonsOutServiceOnstation};
+
+        for (int i = 0; i < selects.length; i++) {
+            ResultSet rs = DbManager.querySQL(selects[i]);
+            try {
+                if (rs != null) {
+                    while (rs.next()) {
+                        String idWagon = rs.getString("id_vozna");
+                        String typeDB = rs.getString("typ_vozna");
+                        String companyDB = rs.getString("spolocnost_nazov");
+                        String stationDb = rs.getString("stanica_nazov");
+                        int idScanner = rs.getInt("ku_id_snimacu");
+                        WagonOnStation wagonOnStation = new WagonOnStation(idWagon, typeDB, companyDB, idScanner, stationDb);
+                        result.add(wagonOnStation);
+                    }
+                    rs.close();
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
 }
