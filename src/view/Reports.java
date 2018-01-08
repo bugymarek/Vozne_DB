@@ -12,6 +12,7 @@ import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
+import Model.StatissAbooutWagonOnStation;
 import Model.WagonOnStation;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
@@ -67,8 +68,6 @@ public class Reports extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jComboBoxStationName1 = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jSpinnerDate1 = new javax.swing.JSpinner();
-        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -136,6 +135,13 @@ public class Reports extends javax.swing.JDialog {
         jTable7 = new javax.swing.JTable();
         jButton7 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
+        jSpinnerCountDateFrom = new javax.swing.JSpinner();
+        jSpinnerCountDateTo = new javax.swing.JSpinner();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTable8 = new javax.swing.JTable();
+        jButton8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -213,10 +219,6 @@ public class Reports extends javax.swing.JDialog {
 
         jLabel15.setText("Stanica");
 
-        jSpinnerDate1.setModel(new javax.swing.SpinnerDateModel());
-
-        jLabel16.setText("Dátum zosnímania");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -233,23 +235,19 @@ public class Reports extends javax.swing.JDialog {
                                 .addGap(0, 267, Short.MAX_VALUE))
                             .addComponent(jComboBoxStationName1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addGap(204, 204, 204)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel11))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16))))
+                            .addComponent(jLabel12)
+                            .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -260,7 +258,6 @@ public class Reports extends javax.swing.JDialog {
                     .addComponent(jComboBoxStationName1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
                             .addComponent(jLabel12)
                             .addComponent(jLabel11)
                             .addComponent(jLabel9)
@@ -268,7 +265,6 @@ public class Reports extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBoxCopanyName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerDate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxInService1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxWagonType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
@@ -561,7 +557,7 @@ public class Reports extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Zoznam vozňov vo vlakoch (3)", jPanel4);
 
-        jComboBoxSelectWagon.setMaximumRowCount(40);
+        jComboBoxSelectWagon.setMaximumRowCount(20);
         jComboBoxSelectWagon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxSelectWagonActionPerformed(evt);
@@ -594,12 +590,12 @@ public class Reports extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxSelectWagon, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jComboBoxSelectWagon, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -858,15 +854,72 @@ public class Reports extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Štatistiky o vozňoch vo vlaku (7)", jPanel8);
 
+        jSpinnerCountDateFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(947341080000L), new java.util.Date(656280000L), new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+
+        jSpinnerCountDateTo.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+
+        jLabel16.setText("Datum do:");
+
+        jLabel27.setText("Datum od:");
+
+        jTable8.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane9.setViewportView(jTable8);
+
+        jButton8.setText("Vyhladaj");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1208, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 472, Short.MAX_VALUE)
+                        .addComponent(jLabel27)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSpinnerCountDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(158, 158, 158)
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSpinnerCountDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerCountDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerCountDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel27))
+                .addGap(18, 18, 18)
+                .addComponent(jButton8)
+                .addContainerGap(576, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGap(117, 117, 117)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(55, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Štatistiky o vozňoch na stanici (8)", jPanel9);
@@ -1000,9 +1053,8 @@ public class Reports extends javax.swing.JDialog {
                 String wagonType = String.valueOf(jComboBoxWagonType1.getSelectedItem());
                 String company = String.valueOf(jComboBoxCopanyName1.getSelectedItem());
                 String inService = String.valueOf(jComboBoxInService1.getSelectedItem());
-                SpinnerDateModel modelDate = (SpinnerDateModel) jSpinnerDate1.getModel();
 
-                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, modelDate.getDate(), company);
+                List<ActualyWagonLocation> wagons = Reports.getCurrentWagonsLocation(comboStation, wagonType, inService, company);
                 Object[][] o = new Object[wagons.size()][9];
                 for (ActualyWagonLocation wagon : wagons) {
                     o[i][0] = wagon.getStationName();
@@ -1308,6 +1360,33 @@ public class Reports extends javax.swing.JDialog {
         t1.start();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        jButton8.setText("Refreshing...");
+        jButton8.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+                
+
+                SpinnerDateModel modelFrom = (SpinnerDateModel) jSpinnerCountDateFrom.getModel();
+                SpinnerDateModel modelTo = (SpinnerDateModel) jSpinnerCountDateTo.getModel();
+
+                List<StatissAbooutWagonOnStation> statCount = Reports.getCountWagonOnStation(modelFrom.getDate(), modelTo.getDate());
+                Object[][] o = new Object[statCount.size()][2];
+                for (StatissAbooutWagonOnStation wagon : statCount) {
+                    o[i][0] = wagon.getNazov() ;
+                    o[i][1] = wagon.getPocet();
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Nazov stanice", "Pocet voznov na stanici "});
+                jTable8.setModel(d);
+                jButton8.setText("Refresh");
+                jButton8.setEnabled(true);
+            }
+        });
+        t1.start();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBRefresh;
@@ -1318,6 +1397,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jCBCompany;
     private javax.swing.JComboBox<String> jCBNameAndIdTrain;
     private javax.swing.JComboBox<String> jCBTypeWagon;
@@ -1354,6 +1434,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1379,10 +1460,12 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSpinner jSpinDatumDoTrainInfo;
     private javax.swing.JSpinner jSpinDatumODStatTrain;
+    private javax.swing.JSpinner jSpinnerCountDateFrom;
+    private javax.swing.JSpinner jSpinnerCountDateTo;
     private javax.swing.JSpinner jSpinnerDate;
-    private javax.swing.JSpinner jSpinnerDate1;
     private javax.swing.JSpinner jSpinnerDateFr;
     private javax.swing.JSpinner jSpinnerDateFrom;
     private javax.swing.JSpinner jSpinnerDateTo;
@@ -1396,6 +1479,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
+    private javax.swing.JTable jTable8;
     private javax.swing.JTable jTableLocation;
     // End of variables declaration//GEN-END:variables
 }
