@@ -13,6 +13,7 @@ import Model.ActualyWagonLocation;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
 import Model.StatissAbooutWagonOnStation;
+import Model.UserModication;
 import Model.WagonOnStation;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
@@ -146,6 +147,10 @@ public class Reports extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jComboBoxFunction = new javax.swing.JComboBox<>();
+        jLabel28 = new javax.swing.JLabel();
+        jSpinnerDateOfModify = new javax.swing.JSpinner();
+        jLabel29 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -924,7 +929,12 @@ public class Reports extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Štatistiky o vozňoch na stanici (8)", jPanel9);
 
-        jButton1.setText("Refresh");
+        jButton1.setText("Vyhladaj");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -936,24 +946,45 @@ public class Reports extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel28.setText("Funkcia :");
+
+        jSpinnerDateOfModify.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1509200100000L), new java.util.Date(1452266100000L), new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+
+        jLabel29.setText("Datum od: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(56, 56, 56)
+                        .addComponent(jComboBoxFunction, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(189, 189, 189)
+                        .addComponent(jLabel29)
+                        .addGap(34, 34, 34)
+                        .addComponent(jSpinnerDateOfModify, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxFunction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28)
+                    .addComponent(jSpinnerDateOfModify, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1255,6 +1286,10 @@ public class Reports extends javax.swing.JDialog {
         
         List<String> idWagons2 = DataManager.getWagonId();
         jCBWagon.setModel(new DefaultComboBoxModel(idWagons2.toArray()));
+        
+        List<String> funkcie = new ArrayList<>(Arrays.asList(""));
+        funkcie.addAll(DataManager.getFunctionNames());
+        jComboBoxFunction.setModel(new DefaultComboBoxModel(funkcie.toArray()));
             }
         
         });
@@ -1387,6 +1422,33 @@ public class Reports extends javax.swing.JDialog {
         t1.start();
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       jButton1.setText("Refreshing...");
+        jButton1.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+                
+
+                SpinnerDateModel modelFrom = (SpinnerDateModel) jSpinnerDateOfModify.getModel();
+                String UserFunction = String.valueOf(jComboBoxFunction.getSelectedItem());
+                List<UserModication> userMod = Reports.getStatisticAboutUSerModify(UserFunction,modelFrom.getDate());
+                Object[][] o = new Object[userMod.size()][4];
+                for (UserModication wagon : userMod) {
+                    o[i][0] = wagon.getMeno();
+                    o[i][1] = wagon.getFunkcia();
+                    o[i][2] = wagon.getPocet();
+                    o[i][3] = wagon.getPercento();
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"Meno zamestnanca", "Funkcia "," Pocet uprav "," Percentulny pocet uprav "});
+                jTable1.setModel(d);
+                jButton1.setText("Refresh");
+                jButton1.setEnabled(true);
+            }
+        });
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBRefresh;
@@ -1405,6 +1467,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxCopanyName;
     private javax.swing.JComboBox<String> jComboBoxCopanyName1;
     private javax.swing.JComboBox<String> jComboBoxCopanyName2;
+    private javax.swing.JComboBox<String> jComboBoxFunction;
     private javax.swing.JComboBox<String> jComboBoxIdTrain;
     private javax.swing.JComboBox<String> jComboBoxInService;
     private javax.swing.JComboBox<String> jComboBoxInService1;
@@ -1435,6 +1498,8 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1468,6 +1533,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinnerDate;
     private javax.swing.JSpinner jSpinnerDateFr;
     private javax.swing.JSpinner jSpinnerDateFrom;
+    private javax.swing.JSpinner jSpinnerDateOfModify;
     private javax.swing.JSpinner jSpinnerDateTo;
     private javax.swing.JSpinner jSpinnerDatumDo;
     private javax.swing.JSpinner jSpinnerDatumGroup;
