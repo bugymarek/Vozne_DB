@@ -627,7 +627,7 @@ public class Reports {
                 + " join Vlak v on(v.ID_VLAKU = sn.ID_VLAKU)"
                 + " join Sprava_voznov sv on(v.ID_VLAKU = sv.id_vlaku)"
                 + " where TO_DATE (TO_CHAR (sn.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
-                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " and ( TO_DATE (TO_CHAR (sn.cas_do, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
                 + " or sn.CAS_DO is null)"
                 + " group by st.nazov";
 
@@ -641,7 +641,7 @@ public class Reports {
                 + " join Vlak v on(v.ID_VLAKU = sn.ID_VLAKU)"
                 + " join Sprava_voznov sv on(v.ID_VLAKU = sv.id_vlaku)"
                 + " where TO_DATE (TO_CHAR (sn.cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') <= to_date('" + datFrom +"','DD.MM.YYYY HH24:MI:SS') "
-                + " and ( sn.CAS_DO> to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
+                + " and ( TO_DATE (TO_CHAR (sn.cas_do, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') > to_date('" + datTO +"','DD.MM.YYYY HH24:MI:SS')"
                 + " or sn.CAS_DO is null)"
                 + " and kolajovy_usek.id_snimacu not in("
                 + " select id_snimacu"
@@ -687,13 +687,13 @@ public class Reports {
                 + " count(*) as pocet,"
                 + " round((count(*)/ (select count(*)"
                 + " from Zaznamy"
-                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
+                + " where to_date(to_char(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY HH24:MI:SS'),'DD.MM.YYYY HH24:MI:SS') > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
                 + " from Osoba "
                 + " join Uzivatel using(rod_cislo)"
-                + "join Funkcia using(id_funkcie)"
+                + " join Funkcia using(id_funkcie)"
                 + " join Zaznamy using(login)"
-                + " where Zaznamy.DATUM_ZAPISU > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
-                + function
+                + " where to_date(to_char(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY HH24:MI:SS'),'DD.MM.YYYY HH24:MI:SS') > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
+                + function 
                 + " group by meno||' '||priezvisko,login,Funkcia.popis"
                 + " order by pocet desc ");
                
