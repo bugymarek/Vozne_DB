@@ -52,7 +52,7 @@ public class Reports {
             company = " AND Spolocnost.nazov like " + addApostrofs(company);
         }
 
-        String wagonsOutServiceOnTrail = "SELECT"
+        String wagonsOutServiceOnTrail = "SELECT distinct"
                 + " id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -68,7 +68,7 @@ public class Reports {
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
 
-        String wagonsOutServiceOnstation = "SELECT"
+        String wagonsOutServiceOnstation = "SELECT distinct"
                 + "                  id_vozna,"
                 + "                  Spolocnost.nazov as spolocnostNazov,"
                 + "                  Typ_vozna.nazov as typ_vozna_nazov,"
@@ -84,7 +84,7 @@ public class Reports {
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
 
-        String wagonsInServiceOnTrail = "SELECT"
+        String wagonsInServiceOnTrail = "SELECT distinct"
                 + " Vozen.id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -102,7 +102,7 @@ public class Reports {
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
                 + wagonType + inService + company;
 
-        String wagonsInServiceOnStation = "SELECT"
+        String wagonsInServiceOnStation = "SELECT distinct" 
                 + " Vozen.id_vozna,"
                 + " Spolocnost.nazov as spolocnostNazov,"
                 + " Typ_vozna.nazov as typ_vozna_nazov,"
@@ -122,7 +122,7 @@ public class Reports {
 
         List<WagonOnStation> result = new ArrayList<>();
 
-        String[] selects = {wagonsOutServiceOnTrail, wagonsOutServiceOnstation, wagonsInServiceOnTrail, wagonsInServiceOnStation};
+        String[] selects = {wagonsOutServiceOnTrail + " UNION " + wagonsOutServiceOnstation + " UNION " + wagonsInServiceOnTrail + " UNION " + wagonsInServiceOnStation};
 
         for (int i = 0; i < selects.length; i++) {
             ResultSet rs = DbManager.querySQL(selects[i]);
