@@ -14,6 +14,8 @@ public class WagonOnStation {
     private String InService;
     private String Type;
     private String Company;
+    private int IdScanner;
+    private String Station;
 
     public WagonOnStation(String IdWagon, String InService, String Type, String Company) {
         this.IdWagon = IdWagon;
@@ -21,6 +23,24 @@ public class WagonOnStation {
         this.Type = Type;
         this.Company = Company;
     }
+
+    public WagonOnStation(String IdWagon, String Type, String Company, int IdScanner, String station) {
+        this.IdWagon = IdWagon;
+        this.Type = Type;
+        this.Company = Company;
+        this.IdScanner = IdScanner;
+        this.Station = station;
+    }
+
+    public int getIdScanner() {
+        return IdScanner;
+    }
+
+    public String getIdStation() {
+        return Station;
+    }
+    
+    
 
     public String getIdWagon() {
         return IdWagon;
