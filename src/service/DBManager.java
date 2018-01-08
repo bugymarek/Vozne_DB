@@ -101,21 +101,5 @@ public class DBManager {
         return result;
     }
 
-    public boolean updateSql(String query) {
-        boolean result = true;
-        try {
-            //STEP 4: Execute a query
-            pstmt = conn.prepareStatement(query);
-            pstmt.executeUpdate();
-
-            //return stmt.executeQuery(query);
-        } catch (SQLException se) {
-            result = false;
-           se.printStackTrace();
-        } catch (Exception e) {
-            result = false;
-            e.printStackTrace();
-        }
-        return result;
-   }
+   
 }//end JDBCExample
