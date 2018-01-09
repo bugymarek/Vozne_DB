@@ -10,6 +10,7 @@ import Model.ActualyWagonLocation;
 import Model.StatisticsAboutWagonInTrain;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
+import Model.AutomaticWagonEvidence;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
 import Model.StatissAbooutWagonOnStation;
@@ -152,6 +153,16 @@ public class Reports extends javax.swing.JDialog {
         jSpinnerDateOfModify = new javax.swing.JSpinner();
         jLabel29 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
+        jComboBoxAutomaticCOmpan = new javax.swing.JComboBox<>();
+        jLabel30 = new javax.swing.JLabel();
+        jComboBoxAutomaticTrainType = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBoxAutomaticWagType = new javax.swing.JComboBox<>();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTable10 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -982,15 +993,85 @@ public class Reports extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Štatistíky pracovníkov (9)", jPanel1);
 
+        jLabel30.setText("Spolocnost:");
+
+        jLabel31.setText("Typ vozna:");
+
+        jLabel32.setText("Typ vlaku:");
+
+        jButton10.setText("Vyhladaj");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jTable10.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane10.setViewportView(jTable10);
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1208, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addGap(46, 46, 46)
+                        .addComponent(jComboBoxAutomaticCOmpan, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel31)
+                        .addGap(64, 64, 64)
+                        .addComponent(jComboBoxAutomaticWagType, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                        .addComponent(jLabel32)
+                        .addGap(37, 37, 37)
+                        .addComponent(jComboBoxAutomaticTrainType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(203, 203, 203)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(849, Short.MAX_VALUE)))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAutomaticCOmpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30)
+                    .addComponent(jComboBoxAutomaticTrainType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAutomaticWagType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel32))
+                .addGap(18, 18, 18)
+                .addComponent(jButton10)
+                .addContainerGap(598, Short.MAX_VALUE))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(639, Short.MAX_VALUE)))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(90, 90, 90)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(51, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Automatický zaevidované vozne (10)", jPanel10);
@@ -1253,6 +1334,7 @@ public class Reports extends javax.swing.JDialog {
         jComboBoxWagonType1.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
         jComboBoxWagonType2.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
         jCBTypeWagon.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
+        jComboBoxAutomaticWagType.setModel(new DefaultComboBoxModel(wagonTypes.toArray()));
         
         List<String> inServiceLs = new ArrayList<>(Arrays.asList("", "N", "Y"));
         jComboBoxInService.setModel(new DefaultComboBoxModel(inServiceLs.toArray()));
@@ -1264,6 +1346,7 @@ public class Reports extends javax.swing.JDialog {
         jComboBoxCopanyName1.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         jComboBoxCopanyName2.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         jCBCompany.setModel(new DefaultComboBoxModel(companyNames.toArray()));
+        jComboBoxAutomaticCOmpan.setModel(new DefaultComboBoxModel(companyNames.toArray()));
         
         List<String> trainIds = DataManager.getTrainIds();
         jComboBoxIdTrain.setModel(new DefaultComboBoxModel(trainIds.toArray()));
@@ -1272,6 +1355,7 @@ public class Reports extends javax.swing.JDialog {
         List<String> trainTypes = new ArrayList<>(Arrays.asList(""));
         trainTypes.addAll(DataManager.getTrainTypes());
         jComboBoxTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
+        jComboBoxAutomaticTrainType.setModel(new DefaultComboBoxModel(trainTypes.toArray()));
 
         List<String> idWagons = DataManager.getWagonId();
         jComboBoxSelectWagon.setModel(new DefaultComboBoxModel(idWagons.toArray()));
@@ -1442,10 +1526,43 @@ public class Reports extends javax.swing.JDialog {
         t1.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+         jButton10.setText("Refreshing...");
+        jButton10.setEnabled(false);
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                int i = 0;
+                
+
+                
+                String TypeOfWag = String.valueOf(jComboBoxAutomaticWagType.getSelectedItem());
+                String comp = String.valueOf(jComboBoxAutomaticCOmpan.getSelectedItem());
+                String TypeOfTrain = String.valueOf(jComboBoxAutomaticTrainType.getSelectedItem());
+                List<AutomaticWagonEvidence> evid = Reports.getAutomaticWagonEvidation(TypeOfWag ,comp, TypeOfTrain);
+                Object[][] o = new Object[evid.size()][6];
+                for (AutomaticWagonEvidence wagon : evid) {
+                    o[i][0] = wagon.getIdWagon();
+                    o[i][1] = wagon.getHmotnost();
+                    o[i][2] = wagon.getNameOfCompany();
+                    o[i][3] = wagon.getNameOfTypeWagon();
+                    o[i][4] = wagon.getNameOfTrain();
+                    o[i][5] = wagon.getTypeOfTrain();
+                    i++;
+                }
+                DefaultTableModel d = new DefaultTableModel(o, new Object[]{"ID vozna", "Hmotnost "," Spolocnost "," typ_vozna "," Nazov vlaku "," Typ vlaku "});
+                jTable10.setModel(d);
+                jButton10.setText("Refresh");
+                jButton10.setEnabled(true);
+            }
+        });
+        t1.start();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBRefresh;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1457,6 +1574,10 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jCBNameAndIdTrain;
     private javax.swing.JComboBox<String> jCBTypeWagon;
     private javax.swing.JComboBox<String> jCBWagon;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxAutomaticCOmpan;
+    private javax.swing.JComboBox<String> jComboBoxAutomaticTrainType;
+    private javax.swing.JComboBox<String> jComboBoxAutomaticWagType;
     private javax.swing.JComboBox<String> jComboBoxCopanyName;
     private javax.swing.JComboBox<String> jComboBoxCopanyName1;
     private javax.swing.JComboBox<String> jComboBoxCopanyName2;
@@ -1494,6 +1615,9 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1511,6 +1635,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1532,6 +1657,7 @@ public class Reports extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinnerDatumGroup;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable10;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

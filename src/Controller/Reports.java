@@ -10,6 +10,7 @@ import Model.StatisticsAboutWagonInTrain;
 import Model.StatisticsAboutWagonInTrain;
 import Model.WagonInTrain;
 import Model.ActualyWagonLocation;
+import Model.AutomaticWagonEvidence;
 import Model.GroupOfWagon;
 import Model.HistoricalWagonLocation;
 import Model.Scanning;
@@ -66,6 +67,7 @@ public class Reports {
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + " and Vozen_spolocnost.datum_do is null"
                 + wagonType + inService + company;
 
         String wagonsOutServiceOnstation = "SELECT distinct"
@@ -82,6 +84,7 @@ public class Reports {
                 + "                  join Stanica using(id_snimacu)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + " and Vozen_spolocnost.datum_do is null"
                 + wagonType + inService + company;
 
         String wagonsInServiceOnTrail = "SELECT distinct"
@@ -100,6 +103,7 @@ public class Reports {
                 + " join Kolajovy_usek using(id_snimacu)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + " and Vozen_spolocnost.datum_do is null"
                 + wagonType + inService + company;
 
         String wagonsInServiceOnStation = "SELECT distinct" 
@@ -118,6 +122,7 @@ public class Reports {
                 + " join Stanica using(id_snimacu)"
                 + " where id_stanice like " + idStation
                 + " AND TO_DATE (TO_CHAR (cas_od, 'DD.MM.YYYY HH24:MI:SS'), 'DD.MM.YYYY HH24:MI:SS') BETWEEN to_date('" + datFrom + "','DD.MM.YYYY HH24:MI:SS') AND to_date('" + datTO + "','DD.MM.YYYY HH24:MI:SS')"
+                + " and Vozen_spolocnost.datum_do is null"
                 + wagonType + inService + company;
 
         List<WagonOnStation> result = new ArrayList<>();
@@ -714,6 +719,62 @@ public class Reports {
                     int pocet = rs.getInt("pocet");
                     Double perce = rs.getDouble("Percentualne_vyjadrenie");
                     UserModication user = new UserModication(NameOfPerson , function1, pocet, perce);
+                    result.add(user);
+                }
+                rs.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    
+     public List<AutomaticWagonEvidence> getAutomaticWagonEvidation( String wagonType,String company, String nameOfTrain) {
+        if (!isNullOrEmpty(wagonType)) {
+            wagonType = " AND tv.nazov like " + addApostrofs(wagonType);
+        }
+        if (!isNullOrEmpty(company)) {
+            company = " AND spol.nazov like " + addApostrofs(company);
+        }
+        if (!isNullOrEmpty(nameOfTrain)) {
+            nameOfTrain = " AND tvk.nazov like " + addApostrofs(nameOfTrain);
+        }
+
+        String wagonsOutService = ("SELECT"
+                + " id_vozna, hmotnost, nazov_typu, nazov_spolocnosti, nazov_vlaku, typ_vlaku"
+                + " FROM (SELECT  voz.id_vozna id_vozna, voz.hmotnost hmotnost,"
+                + " tv.nazov nazov_typu, spol.nazov nazov_spolocnosti, vl.nazov nazov_vlaku, tvk.nazov typ_vlaku"
+                + " FROM vozen voz "
+                + " JOIN typ_vozna tv ON (tv.id_typu = voz.id_typu)"
+                + " JOIN vozen_spolocnost vs ON (vs.id_vozna = voz.id_vozna)"
+                + " JOIN spolocnost spol ON (spol.id_spolocnosti = vs.id_spolocnosti)"
+                + " JOIN sprava_voznov sv ON (sv.id_vozna = voz.id_vozna)"
+                + " JOIN vlak vl ON (vl.id_vlaku = sv.id_vlaku)"
+                + " JOIN typ_vlaku tvk ON (tvk.id_typ = vl.id_typ)"
+                + " JOIN snimanie s ON (s.id_vlaku = vl.id_vlaku)"
+                + " WHERE sv.datum_do IS NULL"
+                + company + nameOfTrain + wagonType
+                + " AND s.id_snimacu NOT IN (SELECT id_snimacu"
+                + " FROM stanica))"
+            );
+               
+        List<AutomaticWagonEvidence> result = new ArrayList<>();
+        DBManager db = new DBManager();
+        ResultSet rs = db.querySQL(wagonsOutService);
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    String idwagon = rs.getString("id_vozna");
+                    int  hmotnost = rs.getInt("hmotnost");
+                    String  typeWag = rs.getString("nazov_typu");
+                    String compa = rs.getString("nazov_spolocnosti");
+                    String  nameOfTrain1 = rs.getString("nazov_vlaku");
+                    String typeTrain = rs.getString("typ_vlaku");
+                    AutomaticWagonEvidence user = new AutomaticWagonEvidence(idwagon , hmotnost, typeWag, compa,nameOfTrain1,typeTrain);
                     result.add(user);
                 }
                 rs.close();
