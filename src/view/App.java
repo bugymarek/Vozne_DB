@@ -1429,7 +1429,7 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        String idWagon = jTextFieldIdWagonDelete1.getText();
+        String idWagon = jTextFieldIdWagonDelete.getText();
         String station = String.valueOf(jComboBoxStationOutOfServiceWagon.getSelectedItem());
         String railScanner = String.valueOf(jComboBoxOutOfServiceScanner.getSelectedItem());
         int idTrain = 0;

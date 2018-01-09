@@ -337,7 +337,7 @@ public class DataManager {
                 + " id_vlaku"
                 + " FROM"
                 + " Sprava_voznov"
-                + " WHERE id_vozna like " + addApostrofs(wagonId)
+                + " WHERE id_vozna = " + addApostrofs(wagonId)
                 + " and datum_do is null";
 
         ResultSet rs = DbManager.querySQL(query);
