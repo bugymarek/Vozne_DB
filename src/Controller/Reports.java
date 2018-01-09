@@ -697,7 +697,11 @@ public class Reports {
                 + " count(*) as pocet,"
                 + " round((count(*)/ (select count(*)"
                 + " from Zaznamy"
-                + " where to_date(to_char(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY HH24:MI:SS'),'DD.MM.YYYY HH24:MI:SS') > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')))*100,2) as Percentualne_vyjadrenie"
+                + " join Uzivatel using(login)"
+                + " join Funkcia using(id_funkcie)"
+                + " where to_date(to_char(Zaznamy.DATUM_ZAPISU,'DD.MM.YYYY HH24:MI:SS'),'DD.MM.YYYY HH24:MI:SS') > to_date('" +dateStringFrom+ "','DD.MM.YYYY HH24:MI:SS')"
+                + function
+                + " ))*100,2) as Percentualne_vyjadrenie"
                 + " from Osoba "
                 + " join Uzivatel using(rod_cislo)"
                 + " join Funkcia using(id_funkcie)"
